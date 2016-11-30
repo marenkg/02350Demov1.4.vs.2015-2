@@ -56,9 +56,12 @@
 
             <!-- This specifies the point of rotation for the animation that rotates the Shape. -->
             <!-- The data binding binds to the CenterX and CenterY properties of the Shape Model object. -->
-            <Rectangle.RenderTransform>
+ 
+<!--           <Rectangle.RenderTransform>
                 <RotateTransform CenterX="{Binding CenterX}" CenterY="{Binding CenterY}"/>
             </Rectangle.RenderTransform>
+Rotation af animation udkommenteret af Maren
+-->
             <!-- This specifies the animation which is triggered by the ellipse being loaded, -->
             <!--  and it specifies that the ellipse should rotate its angle 360 degress every 7 seconds, repeating forever. -->
             <!-- <Rectangle.Triggers>
@@ -101,22 +104,27 @@
         <!--  which means that it passes mouse and other events on to the layers below it. -->
         <Grid Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="15*"/>
-                <RowDefinition Height="15*"/>
-                <RowDefinition Height="15*"/>
-                <RowDefinition Height="15*"/>
-                <RowDefinition Height="15*"/>
-                <RowDefinition Height="15*"/>
-                <RowDefinition Height="15*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-
             <TextBox   Grid.Row="0" FontSize="8" Text="Klasse" AcceptsReturn="True" TextWrapping="Wrap"/>
+
             <TextBlock Grid.Row="1" FontSize="8" Text="Fields" IsHitTestVisible="False" />
             <TextBox   Grid.Row="2" FontSize="8" Text="Insert" AcceptsReturn="True" TextWrapping="Wrap" />
+            
             <TextBlock Grid.Row="3" FontSize="8" Text="Properties" IsHitTestVisible="False" />
             <TextBox   Grid.Row="4" FontSize="8" Text="Insert" AcceptsReturn="True" TextWrapping="Wrap" />
+            
             <TextBlock Grid.Row="5" FontSize="8" Text="Methods" IsHitTestVisible="False" />
-            <TextBox   Grid.Row="6" FontSize="8" Text="Insert" />
+            <TextBox   Grid.Row="6" FontSize="8" Text="Insert" AcceptsReturn="True"/>
+
+            <TextBlock Grid.Row="7" FontSize="8" Text="{Binding Number}"/>
         
         </Grid>
     </Grid>

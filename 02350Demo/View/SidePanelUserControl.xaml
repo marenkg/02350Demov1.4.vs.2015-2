@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="300">
+             d:DesignHeight="370" d:DesignWidth="300">
     <!-- This StackPanel organizes its content from top to bottom. -->
     <StackPanel Width="300">
 
@@ -61,34 +61,45 @@
             </Grid>
         </GroupBox>
 
-        <GroupBox  Margin="5" BorderBrush="Gray">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="30*"/>
+            </Grid.ColumnDefinitions>
+            <GroupBox Grid.Column="0" Margin="5" BorderBrush="Gray">
             <GroupBox.Header>
-                <Label>Insert textbox</Label>
+                <Label>Classes</Label>
             </GroupBox.Header>
 
-            <StackPanel>
-                <Button Content="Create Textbox" Command="{Binding CreateUIElementInThread}" />
-                <!--               <ContentPresenter Content="{Binding MyControl}"/> -->
-            </StackPanel>
+            <DataGrid x:Name="shapesControl" Height="140" ItemsSource="{Binding Shapes}" HeadersVisibility="Column" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+                <DataGrid.Columns>
+                    <!-- It is important to understand that the DataContext 'inside' the DataGrid is a 'Shape' object from the MainViewModels 'Shapes' collection, -->
+                    <!--  which the DataGrid is bound to. -->
+                    <!-- The DataGrids columns are bound to the properties of the current Shape. -->
+                    <DataGridTextColumn Binding="{Binding Number}" Header="Number" Width="*" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding Height}" Header="Height" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
         </GroupBox>
 
-        <GroupBox  Margin="5" BorderBrush="Gray">
+        <GroupBox Grid.Column="2" Margin="5" BorderBrush="Gray">
             <GroupBox.Header>
                 <Label>Undo or Redo</Label>
             </GroupBox.Header>
 
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="47*" />
-                    <ColumnDefinition Width="6*" />
-                    <ColumnDefinition Width="47*" />
-                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40*" />
+                    <RowDefinition Height="20*" />
+                    <RowDefinition Height="40*" />
+                </Grid.RowDefinitions>
 
-                <Button Grid.Column="0" Padding="0,0,5,0">Undo</Button>
-                <Button Grid.Column="2">Redo</Button>
+                <Button Grid.Row="0" Padding="0,0,0,5">Undo</Button>
+                <Button Grid.Row="2" Padding="0,5,0,0">Redo</Button>
             </Grid>
         </GroupBox>
-
+        </Grid>
 
     </StackPanel>
 </UserControl>
