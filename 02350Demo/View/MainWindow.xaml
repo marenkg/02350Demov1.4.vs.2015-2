@@ -28,7 +28,7 @@
             <!-- These ItemsControls are bound to the public Lines and Shapes properties of the MainViewModel class. -->
             <!-- The order of the ItemsControls are important as the Lines will be shown first with the Shapes on top, try switching them. -->
             <ItemsControl ItemsSource="{Binding Lines}"/>
-            <ItemsControl ItemsSource="{Binding Shapes}"/>
+            <ItemsControl ItemsSource="{Binding Shapes}" Margin="5,0,-5,0"/>
         </Grid>
     </StackPanel>
 </Window>

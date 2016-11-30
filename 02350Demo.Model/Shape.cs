@@ -147,7 +147,7 @@ namespace _02350Demo.Model
         // A lambda expression can be given, because the 'NotifyPropertyChanged' method can get the property name from it.
         public bool IsSelected { get { return isSelected; } set { isSelected = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => SelectedColor); } }
         // This method uses an expression-bodied member (http://www.informit.com/articles/article.aspx?p=2414582) to simplify a method that only returns a value;
-        public Brush SelectedColor => IsSelected ? Brushes.Red : Brushes.Yellow;
+        public Brush SelectedColor => IsSelected ? Brushes.Red : Brushes.DarkRed;
 
         // Constructor.
         // The constructor is in this case used to set the default values for the properties.

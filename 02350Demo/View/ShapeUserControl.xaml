@@ -10,7 +10,7 @@
              d:DesignHeight="100" d:DesignWidth="100">
     <!-- Above the position (X and Y) and size (Width and Height) is bound for the Shape. -->
     <!-- The Canvas.Left and Canvas.Top are attached properties, that the Shape only has because it is part of a Canvas. -->
-    
+
     <!-- The 'Shape' class is shown with a visual 'Shape' control, just like in the 02350SuperSimpleDemo. -->
     <!-- The important thing to understand is that the DataContext of this UserControl is a 'Shape' object, -->
     <!--  from the MainViewModels 'Shapes' collection because this 'UserControl' is used by the ItemsCollection in the MainWindow, -->
@@ -22,7 +22,7 @@
         <!--  this ellipse becomes visible and indicates with its color whether is has already been chosen as part of the Line drawing operation. -->
         <!-- The fill color is bound to the SelectedColor property on the Shape, which returns a Brush, which is a visual object that specifies the color. -->
         <!-- The reason brushes are used is because the color can be solid, which is the default or a gradient, or even others. -->
-        <Ellipse Fill="{Binding SelectedColor}" Stroke="Transparent" StrokeThickness="6" />
+        <Rectangle Fill="{Binding SelectedColor}" Stroke="Transparent" StrokeThickness="6" />
         <!-- The second lowest layer in the stack are two texts ('choose' and 'by clicking'). -->
         <!-- The reason for the grid, is to divide the height of the Shape in 5 areas and putting the texts, -->
         <!--  in the second and fourth area. -->
@@ -46,31 +46,31 @@
         <!--  than that of the ShapeUserControl. -->
         <!-- The RelativeSource finds the first parent element which is a Window, which is the MainWindow, -->
         <!--  then it uses that DataContext to bind to the MainViewModels 'ModeOpacity'. -->
-        <Ellipse Opacity="{Binding DataContext.ModeOpacity, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Stroke="Purple" StrokeThickness="6" StrokeDashArray="3.1">
+        <Rectangle Opacity="{Binding DataContext.ModeOpacity, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" StrokeThickness="6" StrokeDashArray="3.1">
             <!-- The fill (background) color of the ellipse is a radial (center to edge) gradient (more than one color) brush. -->
-            <Ellipse.Fill>
+            <Rectangle.Fill>
                 <RadialGradientBrush>
-                    <GradientStop Color="CornflowerBlue" Offset="0.0" />
-                    <GradientStop  Color="Blue" Offset="0.60" />
-                    <GradientStop Color="Navy" Offset="0.90" />
+                    <GradientStop Color="Red" Offset="0.0" />
+                    <GradientStop  Color="Red" Offset="0.60" />
+                    <GradientStop Color="Red" Offset="0.90" />
                 </RadialGradientBrush>
-            </Ellipse.Fill>
+            </Rectangle.Fill>
             <!-- This specifies the point of rotation for the animation that rotates the Shape. -->
             <!-- The data binding binds to the CenterX and CenterY properties of the Shape Model object. -->
-            <Ellipse.RenderTransform>
+            <Rectangle.RenderTransform>
                 <RotateTransform CenterX="{Binding CenterX}" CenterY="{Binding CenterY}"/>
-            </Ellipse.RenderTransform>
+            </Rectangle.RenderTransform>
             <!-- This specifies the animation which is triggered by the ellipse being loaded, -->
             <!--  and it specifies that the ellipse should rotate its angle 360 degress every 7 seconds, repeating forever. -->
-            <Ellipse.Triggers>
-                <EventTrigger RoutedEvent="Ellipse.Loaded">
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle" From="0" To="360" Duration="0:0:7" RepeatBehavior="Forever" />
-                        </Storyboard>
+            <!-- <Rectangle.Triggers>
+                <EventTrigger RoutedEvent="Rectangle.Loaded">
+                   <BeginStoryboard>
+                          <Storyboard>
+                             <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle" From="0" To="360" Duration="0:0:7" RepeatBehavior="Forever" />
+                          </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>
-            </Ellipse.Triggers>
+            </Rectangle.Triggers> -->
             <!-- This uses the MVVMLight package to bind mouse events to commands on the MainViewModel. -->
             <!-- More specifically it binds the three events MouseDown, MouseMove and MouseUp, -->
             <!--  to the corresponding commands (MouseDownShapeCommand, MouseMoveShapeCommand and MouseUpShapeCommand) on the MainViewModel. -->
@@ -94,7 +94,7 @@
                     <cmd:EventToCommand Command="{Binding DataContext.MouseUpShapeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" PassEventArgsToCommand="True"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
-        </Ellipse>
+        </Rectangle>
         <!-- The fourth lowest, and therefore the highest layer of the stack is a text that shows the Number of the Shape. -->
         <!-- The Number is put in the middle with TextAlign and VerticalAlign. -->
         <!-- An interesting thing about this layer is that it is not HitTestVisisble, -->
