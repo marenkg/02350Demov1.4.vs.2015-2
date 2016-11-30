@@ -34,7 +34,7 @@
                     </StackPanel>
                 </Button>
 
-                <Button Grid.Column="2"  Command="{Binding AddArrowCommand}" Padding="10,5,10,5" Button.Background="White">
+                <Button Grid.Column="2"  Padding="10,5,10,5" Button.Background="White">
                     <StackPanel>
                         <TextBlock HorizontalAlignment="Center">Arrow</TextBlock>
                         <Image Source="Images/Arrow.png" />

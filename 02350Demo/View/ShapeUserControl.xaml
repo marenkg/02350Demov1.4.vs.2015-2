@@ -55,6 +55,7 @@
                     <GradientStop Color="Red" Offset="0.90" />
                 </RadialGradientBrush>
             </Rectangle.Fill>
+
             <!-- This specifies the point of rotation for the animation that rotates the Shape. -->
             <!-- The data binding binds to the CenterX and CenterY properties of the Shape Model object. -->
             <Rectangle.RenderTransform>
@@ -95,10 +96,30 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Rectangle>
+        
         <!-- The fourth lowest, and therefore the highest layer of the stack is a text that shows the Number of the Shape. -->
         <!-- The Number is put in the middle with TextAlign and VerticalAlign. -->
         <!-- An interesting thing about this layer is that it is not HitTestVisisble, -->
         <!--  which means that it passes mouse and other events on to the layers below it. -->
-        <TextBlock IsHitTestVisible="False" FontSize="20" Text="{Binding Number}" TextAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+        <Grid Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="15*"/>
+                <RowDefinition Height="15*"/>
+                <RowDefinition Height="15*"/>
+                <RowDefinition Height="15*"/>
+                <RowDefinition Height="15*"/>
+                <RowDefinition Height="15*"/>
+                <RowDefinition Height="15*"/>
+            </Grid.RowDefinitions>
+
+            <TextBox   Grid.Row="0" FontSize="8" Text="Klasse" AcceptsReturn="True" TextWrapping="Wrap"/>
+            <TextBlock Grid.Row="1" FontSize="8" Text="Fields" IsHitTestVisible="False" />
+            <TextBox   Grid.Row="2" FontSize="8" Text="Insert" AcceptsReturn="True" TextWrapping="Wrap" />
+            <TextBlock Grid.Row="3" FontSize="8" Text="Properties" IsHitTestVisible="False" />
+            <TextBox   Grid.Row="4" FontSize="8" Text="Insert" AcceptsReturn="True" TextWrapping="Wrap" />
+            <TextBlock Grid.Row="5" FontSize="8" Text="Methods" IsHitTestVisible="False" />
+            <TextBox   Grid.Row="6" FontSize="8" Text="Insert" />
+        
+        </Grid>
     </Grid>
 </UserControl>

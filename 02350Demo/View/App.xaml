@@ -22,22 +22,6 @@
                 <View:LineUserControl/>
             </Canvas>
         </DataTemplate>
-        <!-- This part defines how a button should look by default, in this application. -->
-        <Style TargetType="Button">
-            <Setter Property="OverridesDefaultStyle" Value="False"/>
-            <Setter Property="Margin" Value="4"/>
-            <Setter Property="FontFamily" Value="Verdana"/>
-            <Setter Property="FontSize" Value="14px"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Background" >
-                <Setter.Value>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" >
-                        <GradientStop Color="#FFFFD190" Offset="0.2"/>
-                        <GradientStop Color="Orange" Offset="0.85"/>
-                        <GradientStop Color="#FFFFD190" Offset="1"/>
-                    </LinearGradientBrush>
-                </Setter.Value>
-            </Setter>
-        </Style>
+
     </Application.Resources>
 </Application>
