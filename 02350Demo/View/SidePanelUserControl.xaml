@@ -1,0 +1,83 @@
+﻿<UserControl x:Class="_02350Demo.View.SidePanelUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="300">
+    <!-- This StackPanel organizes its content from top to bottom. -->
+    <StackPanel Width="300">
+
+        <StackPanel.Background>
+            <SolidColorBrush Color="White"/>
+        </StackPanel.Background>
+
+
+        <GroupBox Margin="5" BorderBrush="Gray">
+            <GroupBox.Header>
+                <Label>Insert Elements</Label>
+            </GroupBox.Header>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30*" />
+                    <ColumnDefinition Width="5*" />
+                    <ColumnDefinition Width="30*" />
+                    <ColumnDefinition Width="5*" />
+                    <ColumnDefinition Width="30*" />
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0"  Command="{Binding AddShapeCommand}" Padding="10,5,10,5" Button.Background="White">
+                    <StackPanel>
+                        <TextBlock HorizontalAlignment="Center" >Square</TextBlock>
+                        <Image Source="Images/Square.png"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Grid.Column="2"  Command="{Binding AddArrowCommand}" Padding="10,5,10,5" Button.Background="White">
+                    <StackPanel>
+                        <TextBlock HorizontalAlignment="Center">Arrow</TextBlock>
+                        <Image Source="Images/Arrow.png" />
+                    </StackPanel>
+                </Button>
+
+                <Button  Grid.Column="4" Command="{Binding AddLineCommand}" Padding="10,5,10,5" Button.Background="White">
+                    <StackPanel>
+                        <TextBlock HorizontalAlignment="Center">Line</TextBlock>
+                        <Image Source="Images/Line.png" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox  Margin="5" BorderBrush="Gray">
+            <GroupBox.Header>
+                <Label>Insert textbox</Label>
+            </GroupBox.Header>
+
+            <StackPanel>
+                <Button Content="Create Textbox" Command="{Binding CreateUIElementInThread}" />
+                <!--               <ContentPresenter Content="{Binding MyControl}"/> -->
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox  Margin="5" BorderBrush="Gray">
+            <GroupBox.Header>
+                <Label>Undo or Redo</Label>
+            </GroupBox.Header>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="47*" />
+                    <ColumnDefinition Width="6*" />
+                    <ColumnDefinition Width="47*" />
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" Padding="0,0,5,0">Undo</Button>
+                <Button Grid.Column="2">Redo</Button>
+            </Grid>
+        </GroupBox>
+
+
+    </StackPanel>
+</UserControl>
