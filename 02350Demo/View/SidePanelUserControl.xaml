@@ -26,27 +26,38 @@
                     <ColumnDefinition Width="5*" />
                     <ColumnDefinition Width="30*" />
                 </Grid.ColumnDefinitions>
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="45*"/>
+                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="45*"/>
+                </Grid.RowDefinitions>
 
-                <Button Grid.Column="0"  Command="{Binding AddShapeCommand}" Padding="10,5,10,5" Button.Background="White">
+                <Button Grid.Column="0" Grid.Row="0" Command="{Binding AddShapeCommand}" Padding="10,5,10,5" Button.Background="White">
                     <StackPanel>
                         <TextBlock HorizontalAlignment="Center" >Square</TextBlock>
                         <Image Source="Images/Square.png"/>
                     </StackPanel>
                 </Button>
 
-                <Button Grid.Column="2"  Padding="10,5,10,5" Button.Background="White">
+                <Button Grid.Column="2" Grid.Row="0" Padding="10,5,10,5" Button.Background="White">
                     <StackPanel>
                         <TextBlock HorizontalAlignment="Center">Arrow</TextBlock>
                         <Image Source="Images/Arrow.png" />
                     </StackPanel>
                 </Button>
 
-                <Button  Grid.Column="4" Command="{Binding AddLineCommand}" Padding="10,5,10,5" Button.Background="White">
+                <Button  Grid.Column="4" Grid.Row="0" Command="{Binding AddLineCommand}" Padding="10,5,10,5" Button.Background="White">
                     <StackPanel>
                         <TextBlock HorizontalAlignment="Center">Line</TextBlock>
                         <Image Source="Images/Line.png" />
                     </StackPanel>
                 </Button>
+
+                <TextBlock Grid.Column="0" Grid.Row="2"> Click to insert. </TextBlock>
+                <TextBlock Grid.Column="2" Grid.Row="2"> Click to insert. </TextBlock>
+                <TextBlock Grid.Column="4" Grid.Row="2"> Click on classes. <LineBreak/> From sender to <LineBreak/> reciever</TextBlock>
+                
             </Grid>
         </GroupBox>
 
