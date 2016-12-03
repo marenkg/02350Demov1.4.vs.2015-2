@@ -15,6 +15,12 @@
     <!-- The important thing to understand is that the DataContext of this UserControl is a 'Shape' object, -->
     <!--  from the MainViewModels 'Shapes' collection because this 'UserControl' is used by the ItemsCollection in the MainWindow, -->
     <!--  and that ItemsCollection is bound to the MainViewModels 'Shapes' collection. -->
+
+    <UserControl.InputBindings>
+        <KeyBinding Modifiers="Control" Key="Z" Command="{Binding UndoCommand}" />
+        <KeyBinding Modifiers="Control" Key="Y" Command="{Binding RedoCommand}" />
+    </UserControl.InputBindings>
+
     <!-- This Grid is used to stack visuel elements on top of each other. -->
     <Grid>
         <!-- The lowest visual layer in the stack, is an ellipse that is only visible when a Line is being "drawn". -->
@@ -49,7 +55,7 @@
             <Rectangle.Fill>
                 <RadialGradientBrush>
                     <GradientStop Color="Red" Offset="0.0" />
-                    <GradientStop  Color="Red" Offset="0.60" />
+                    <GradientStop Color="Red" Offset="0.60" />
                     <GradientStop Color="Red" Offset="0.90" />
                 </RadialGradientBrush>
             </Rectangle.Fill>
