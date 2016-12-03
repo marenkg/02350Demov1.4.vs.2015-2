@@ -24,5 +24,6 @@ namespace _02350Demo.View
         {
             InitializeComponent();
         }
+
     }
 }
