@@ -12,6 +12,7 @@ namespace _02350Demo.Model
     // Do not worry to much about this class, as the functionality is normally given by MVVM Frameworks.
     // This is an abstract base class that is used to define INotifyPropertyChanged functionality used by all Model classes, so they do not have to.
     // The purpose of the INotifyPropertyChanged interface is to inform the View (GUI) that a property of a bound object has changed, so it can update the corresponding graphical representation.
+    //[Serializable]
     public abstract class NotifyBase : INotifyPropertyChanged
     {
         // This is the event that is raised when the INotifyPropertyChanged interface is used to let the View (GUI) know that a property of a bound object has changed.

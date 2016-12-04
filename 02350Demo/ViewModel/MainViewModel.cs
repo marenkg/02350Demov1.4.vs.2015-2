@@ -6,7 +6,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -62,6 +65,9 @@ namespace _02350Demo.ViewModel
         public ICommand AddLineCommand { get; }
         public ICommand RemoveLinesCommand { get; }
 
+        public ICommand LoadCommand { get; }
+        public ICommand SaveCommand { get; }
+
         // Commands that the UI can be bound to.
         public ICommand MouseDownShapeCommand { get; }
         public ICommand MouseMoveShapeCommand { get; }
@@ -101,6 +107,9 @@ namespace _02350Demo.ViewModel
             AddLineCommand = new RelayCommand(AddLine);
             RemoveLinesCommand = new RelayCommand<IList>(RemoveLines, CanRemoveLines);
 
+            LoadCommand = new RelayCommand(LoadData);
+            SaveCommand = new RelayCommand(SaveData);
+
             // The commands are given the methods they should use to execute, and find out if they can execute.
             MouseDownShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseDownShape);
             MouseMoveShapeCommand = new RelayCommand<MouseEventArgs>(MouseMoveShape);
@@ -111,6 +120,55 @@ namespace _02350Demo.ViewModel
         private void AddShape()
         {
             undoRedoController.AddAndExecute(new AddShapeCommand(Shapes, new Shape()));
+        }
+
+        private void LoadData()
+        {
+            // Using old? tech
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            openFileDialog.Filter = "UML (*.uml)|*.uml";
+            if (openFileDialog.ShowDialog() == true) {
+                String filename = openFileDialog.FileName;
+                // check file exist, etc?
+
+                // Delete any created objs:
+                Shapes.Clear();
+                Lines.Clear();
+                // TODO: empty undoRedo stack
+
+                // https://msdn.microsoft.com/en-us/library/ms973893.aspx
+                IFormatter formatter = new BinaryFormatter();
+                Stream stream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read);
+                
+                LinkedList<Object> data = (LinkedList<Object>)formatter.Deserialize(stream);
+                data.ToList().ForEach(serializeShapeData => {
+                    Shape shape = new Shape();
+                    shape.LoadSerializedData(serializeShapeData);
+                    Shapes.Add(shape);
+                });
+
+                stream.Close();
+            }
+        }
+
+        private void SaveData()
+        {
+            Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog();
+            saveFileDialog.Filter = "UML (*.uml)|*.uml";
+            if (saveFileDialog.ShowDialog() == true) {
+                String filename = saveFileDialog.FileName;
+                Stream stream = new FileStream(filename, FileMode.Create, FileAccess.Write, FileShare.None);
+
+                IFormatter formatter = new BinaryFormatter();
+                LinkedList<Object> fuckObservableCollection = new LinkedList<Object>();
+                foreach (var shape in Shapes)
+                {
+                    fuckObservableCollection.AddFirst( shape.Serialize() );
+                }
+                formatter.Serialize(stream, fuckObservableCollection);
+
+                stream.Close();
+            }
         }
 
         // Checks if the chosen Shapes can be removed, which they can if exactly 1 is chosen.

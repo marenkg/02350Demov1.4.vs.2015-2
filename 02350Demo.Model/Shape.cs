@@ -8,10 +8,12 @@ using System.Windows.Media;
 namespace _02350Demo.Model
 {
     // The Shape class descripes a shape with a position (X and Y), and a size (Width and Height).
+    //[Serializable]
     public class Shape : NotifyBase
     {
         // For a description of the Getter/Setter Property syntax ("{ get { ... } set { ... } }") see the Line class.
         // The static integer counter field is used to set the integer Number property to a unique number for each Shape object.
+        //[NonSerialized]
         private static int counter = 0;
 
         // The Number integer property holds a unique integer for each Shape object to identify them in the View (GUI) layer.
@@ -140,6 +142,7 @@ namespace _02350Demo.Model
         //         but should not be used in the Model layer, creating an unnecessary dependency for the Model layer class library).
         //       To learn how to avoid this and create an application with a more pure MVVM architecture pattern, 
         //        please ask the Teaching Assistants.
+        [NonSerialized]
         private bool isSelected;
         // The reason no string is given to the 'NotifyPropertyChanged' method is because, 
         //  it uses the compiler to get the name of the calling property, 
@@ -162,5 +165,30 @@ namespace _02350Demo.Model
         // The ToString() method is inheritied from the Object class, that all classes inherit from.
         // This method uses an expression-bodied member (http://www.informit.com/articles/article.aspx?p=2414582) to simplify a method that only returns a value;
         public override string ToString() => Number.ToString();
+
+        public Object Serialize()
+        {
+            // Please find a better way of doing this ...
+            Dictionary<string, double> o = new Dictionary<string, double>(4);
+            o.Add("x", x);
+            o.Add("y", y);
+            o.Add("width", width);
+            o.Add("height", height);
+            return o;
+        }
+
+        public void LoadSerializedData(Object o)
+        {
+            try {
+                var obj = (Dictionary<string, double>)o;
+                obj.TryGetValue("x", out x);
+                obj.TryGetValue("y", out y);
+                obj.TryGetValue("width", out width);
+                obj.TryGetValue("height", out height);
+            } finally
+            {
+                // tja
+            }
+        }
     }
 }
