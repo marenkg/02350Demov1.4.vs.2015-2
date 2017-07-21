@@ -32,7 +32,7 @@ namespace _02350Demo.ViewModel
         // Keeps track of the state, depending on whether a line is being added or not.
         private bool isAddingLine;
         // Used for saving the shape that a line is drawn from, while it is being drawn.
-        private Shape addingLineFrom;
+        private ClassBox addingLineFrom;
         // Saves the initial point that the mouse has during a move operation.
         private Point initialMousePosition;
         // Saves the initial point that the shape has during a move operation.
@@ -51,7 +51,7 @@ namespace _02350Demo.ViewModel
         // The "{ get; set; }" syntax describes that a private field 
         //  and default getter setter methods should be generated.
         // This is called Auto-Implemented Properties (http://msdn.microsoft.com/en-us/library/bb384054.aspx).
-        public ObservableCollection<Shape> Shapes { get; set; }
+        public ObservableCollection<ClassBox> Shapes { get; set; }
         public ObservableCollection<Line> Lines { get; set; }
 
         // Commands that the UI can be bound to.
@@ -86,7 +86,7 @@ namespace _02350Demo.ViewModel
             // Also a constructor could be created for the Shape class that takes the parameters (X, Y, Width and Height), 
             //  and the following could be done:
             // new Shape(30, 40, 80, 80);
-            Shapes = new ObservableCollection<Shape>() { 
+            Shapes = new ObservableCollection<ClassBox>() { 
 
             };
             // Here the list of Lines i filled with 1 Line that connects the 2 Shapes in the Shapes collection.
@@ -119,7 +119,7 @@ namespace _02350Demo.ViewModel
         // Adds a Shape with an AddShapeCommand.
         private void AddShape()
         {
-            undoRedoController.AddAndExecute(new AddShapeCommand(Shapes, new Shape()));
+            undoRedoController.AddAndExecute(new AddShapeCommand(Shapes, new ClassBox()));
         }
 
         private void LoadData()
@@ -142,7 +142,7 @@ namespace _02350Demo.ViewModel
                 
                 LinkedList<Object> data = (LinkedList<Object>)formatter.Deserialize(stream);
                 data.ToList().ForEach(serializeShapeData => {
-                    Shape shape = new Shape();
+                    ClassBox shape = new ClassBox();
                     shape.LoadSerializedData(serializeShapeData);
                     Shapes.Add(shape);
                 });
@@ -178,7 +178,7 @@ namespace _02350Demo.ViewModel
         // Removes the chosen Shapes with a RemoveShapesCommand.
         private void RemoveShape(IList _shapes)
         {
-            undoRedoController.AddAndExecute(new RemoveShapesCommand(Shapes, Lines, _shapes.Cast<Shape>().ToList()));
+            undoRedoController.AddAndExecute(new RemoveShapesCommand(Shapes, Lines, _shapes.Cast<ClassBox>().ToList()));
         }
 
         // Starts the procedure to remove a Line, by changing the mode to 'isAddingLine', 
@@ -306,12 +306,12 @@ namespace _02350Demo.ViewModel
         }
 
         // Gets the shape that was clicked.
-        private Shape TargetShape(MouseEventArgs e)
+        private ClassBox TargetShape(MouseEventArgs e)
         {
             // Here the visual element that the mouse is captured by is retrieved.
             var shapeVisualElement = (FrameworkElement)e.MouseDevice.Target;
             // From the shapes visual element, the Shape object which is the DataContext is retrieved.
-            return (Shape)shapeVisualElement.DataContext;
+            return (ClassBox)shapeVisualElement.DataContext;
         }
 
         // Gets the mouse position relative to the canvas.

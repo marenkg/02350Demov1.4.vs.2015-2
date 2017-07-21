@@ -9,7 +9,7 @@ namespace _02350Demo.Model
 {
     // The Shape class descripes a shape with a position (X and Y), and a size (Width and Height).
     //[Serializable]
-    public class Shape : NotifyBase
+    public class ClassBox : NotifyBase
     {
         // For a description of the Getter/Setter Property syntax ("{ get { ... } set { ... } }") see the Line class.
         // The static integer counter field is used to set the integer Number property to a unique number for each Shape object.
@@ -154,7 +154,7 @@ namespace _02350Demo.Model
 
         // Constructor.
         // The constructor is in this case used to set the default values for the properties.
-        public Shape()
+        public ClassBox()
         {
             // This just means that the integer field called counter is incremented before its value is used to set the Number integer property.
             Number = ++counter;

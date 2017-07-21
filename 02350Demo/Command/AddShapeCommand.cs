@@ -19,17 +19,17 @@ namespace _02350Demo.Command
         //  therefore when this collection is changed in a object of this class, 
         //  it also changes the collection that the MainViewModel uses.
         // For a description of an ObservableCollection see the MainViewModel class.
-        private ObservableCollection<Shape> shapes;
+        private ObservableCollection<ClassBox> shapes;
         // The 'shape' field holds a new shape, that is added to the 'shapes' collection, 
         //  and if undone, it is removed from the collection.
-        private Shape shape;
+        private ClassBox shape;
 
         #endregion
 
         #region Constructor
 
         // For changing the current state of the diagram.
-        public AddShapeCommand(ObservableCollection<Shape> _shapes, Shape _shape) 
+        public AddShapeCommand(ObservableCollection<ClassBox> _shapes, ClassBox _shape) 
         { 
             shapes = _shapes;
             shape = _shape;

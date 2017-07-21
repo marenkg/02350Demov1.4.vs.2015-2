@@ -28,8 +28,8 @@ namespace _02350Demo.Model
         //    from = value;
         //    NotifyPropertyChanged();
         //  }
-        private Shape from;
-        public Shape From { get { return from; } set { from = value; NotifyPropertyChanged(); } }
+        private ClassBox from;
+        public ClassBox From { get { return from; } set { from = value; NotifyPropertyChanged(); } }
 
         // The reason no string is given to the 'NotifyPropertyChanged' method is because, 
         //  it uses the compiler to get the name of the calling property, 
@@ -45,7 +45,7 @@ namespace _02350Demo.Model
         //    to = value;
         //    NotifyPropertyChanged();
         //  }
-        private Shape to;
-        public Shape To { get { return to; } set { to = value; NotifyPropertyChanged(); } }
+        private ClassBox to;
+        public ClassBox To { get { return to; } set { to = value; NotifyPropertyChanged(); } }
     }
 }

@@ -18,7 +18,7 @@ namespace _02350Demo.Command
         //  as one of the objects in the MainViewModels 'Shapes' ObservableCollection.
         // This shape is moved by changing its coordinates (X and Y), 
         //  and if undone the coordinates are changed back to the original coordinates.
-        private Shape shape;
+        private ClassBox shape;
 
         // The 'offsetX' field holds the offset (difference) between the original and final X coordinate.
         private double offsetX;
@@ -30,7 +30,7 @@ namespace _02350Demo.Command
         #region Constructor
 
         // For changing the current state of the diagram.
-        public MoveShapeCommand(Shape _shape, double _offsetX, double _offsetY) 
+        public MoveShapeCommand(ClassBox _shape, double _offsetX, double _offsetY) 
         {
             shape = _shape;
             offsetX = _offsetX;

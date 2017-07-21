@@ -10,7 +10,7 @@
         <!-- This Visual description is defined in the 'NodeUserControl'. -->
         <!-- If you remove this template the Shape will be show with a TextBlock, that shows the return value of the "ToString()" method. -->
         <!-- The Data Type tells the WPF engine, that this Data Template should be applied for the Shape class, in the Model namespace (Java: package). -->
-        <DataTemplate DataType="{x:Type Model:Shape}">
+        <DataTemplate DataType="{x:Type Model:ClassBox}">
             <Canvas>
                 <View:ShapeUserControl/>
             </Canvas>
