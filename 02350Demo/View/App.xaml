@@ -12,7 +12,7 @@
         <!-- The Data Type tells the WPF engine, that this Data Template should be applied for the Shape class, in the Model namespace (Java: package). -->
         <DataTemplate DataType="{x:Type Model:ClassBox}">
             <Canvas>
-                <View:ShapeUserControl/>
+                <View:ClassBoxUserControl/>
             </Canvas>
         </DataTemplate>
         <!-- This Data Template tells the View (Window) how to visually show the Line class. -->
