@@ -67,6 +67,8 @@ namespace _02350Demo.ViewModel
 
         public ICommand LoadCommand { get; }
         public ICommand SaveCommand { get; }
+      //  public ICommand ExitCommand { get; }
+
 
         // Commands that the UI can be bound to.
         public ICommand MouseDownShapeCommand { get; }
@@ -114,7 +116,16 @@ namespace _02350Demo.ViewModel
             MouseDownShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseDownShape);
             MouseMoveShapeCommand = new RelayCommand<MouseEventArgs>(MouseMoveShape);
             MouseUpShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseUpShape);
+
+          //  ExitCommand = new RelayCommand<Window>(ExitWindow);
+
         }
+
+        //private void ExitWindow(window)
+        //{
+        //    window.Close();
+
+        //}
 
         // Adds a Shape with an AddShapeCommand.
         private void AddShape()
@@ -160,12 +171,12 @@ namespace _02350Demo.ViewModel
                 Stream stream = new FileStream(filename, FileMode.Create, FileAccess.Write, FileShare.None);
 
                 IFormatter formatter = new BinaryFormatter();
-                LinkedList<Object> fuckObservableCollection = new LinkedList<Object>();
+                LinkedList<Object> ObservableCollection = new LinkedList<Object>();
                 foreach (var shape in Shapes)
                 {
-                    fuckObservableCollection.AddFirst( shape.Serialize() );
+                    ObservableCollection.AddFirst( shape.Serialize() );
                 }
-                formatter.Serialize(stream, fuckObservableCollection);
+                formatter.Serialize(stream, ObservableCollection);
 
                 stream.Close();
             }
