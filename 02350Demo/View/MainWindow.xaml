@@ -24,7 +24,7 @@
     <!--  to the right is a panel with controls and to the right is a grid with two UserControls, for the shapes and lines. -->
     <!-- The StackPanel organizes things from left to right, because the orientation is set to Horizontal. -->
     <!-- The ItemControls shows the objects they are bound, using the DataTemplates defined in the App.xaml file. -->
-    <StackPanel Orientation="Horizontal">
+    <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
         <!-- The Controls (visual components), in the left side of the View (Window) are defined in the 'SidePanelUserControl'-->
         <View:SidePanelUserControl/>
 

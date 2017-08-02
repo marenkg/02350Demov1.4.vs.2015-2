@@ -5,91 +5,93 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="370" d:DesignWidth="300">
-    <UserControl.InputBindings>
-        <KeyBinding Modifiers="Control" Key="Z" Command="{Binding UndoCommand}" />
-        <KeyBinding Modifiers="Control" Key="Y" Command="{Binding RedoCommand}" />
-    </UserControl.InputBindings>
+<UserControl.InputBindings>
+    <KeyBinding Modifiers="Control" Key="Z" Command="{Binding UndoCommand}" />
+    <KeyBinding Modifiers="Control" Key="Y" Command="{Binding RedoCommand}" />
+</UserControl.InputBindings>
 
 
-    <!-- This StackPanel organizes its content from top to bottom. -->
-    <StackPanel Width="300">
+<!-- This StackPanel organizes its content from top to bottom. -->
 
-        <StackPanel.Background>
-            <SolidColorBrush Color="White"/>
-        </StackPanel.Background>
+<!-- <Border CornerRadius="3" BorderBrush="Gray" Background="LightGray" BorderThickness="2" Height="365"> -->
+<StackPanel Width="300">
+
+    <StackPanel.Background>
+        <SolidColorBrush Color="White"/>
+    </StackPanel.Background>
 
 
-        <GroupBox Margin="5" BorderBrush="Gray">
-            <GroupBox.Header>
-                <Label>Insert Elements</Label>
-            </GroupBox.Header>
-
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30*" />
-                    <ColumnDefinition Width="5*" />
-                    <ColumnDefinition Width="30*" />
-                    <ColumnDefinition Width="5*" />
-                    <ColumnDefinition Width="30*" />
-                </Grid.ColumnDefinitions>
-                
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="45*"/>
-                    <RowDefinition Height="5*"/>
-                    <RowDefinition Height="45*"/>
-                </Grid.RowDefinitions>
-
-                <Button Grid.Column="0" Grid.Row="0" Command="{Binding AddShapeCommand}" Padding="10,5,10,5" Button.Background="White">
-                    <StackPanel>
-                        <TextBlock HorizontalAlignment="Center" >Square</TextBlock>
-                        <Image Source="Images/Square.png"/>
-                    </StackPanel>
-                </Button>
-
-                <Button Grid.Column="2" Grid.Row="0" Command="{Binding AddArrowCommand}" Padding="10,5,10,5" Button.Background="White">
-                    <StackPanel>
-                        <TextBlock HorizontalAlignment="Center">Arrow</TextBlock>
-                        <Image Source="Images/Arrow.png" />
-                    </StackPanel>
-                </Button>
-
-                <Button  Grid.Column="4" Grid.Row="0" Command="{Binding AddLineCommand}" Padding="10,5,10,5" Button.Background="White">
-                    <StackPanel>
-                        <TextBlock HorizontalAlignment="Center">Line</TextBlock>
-                        <Image Source="Images/Line.png" />
-                    </StackPanel>
-                </Button>
-
-                <TextBlock Grid.Column="0" Grid.Row="2"> Click to insert. </TextBlock>
-                <TextBlock Grid.Column="2" Grid.Row="2"> Click to insert. </TextBlock>
-                <TextBlock Grid.Column="4" Grid.Row="2"> Click on classes. <LineBreak/> From sender to <LineBreak/> reciever</TextBlock>
-                
-            </Grid>
-        </GroupBox>
+    <GroupBox Margin="5" BorderBrush="Gray">
+        <GroupBox.Header>
+            <Label>Insert Elements</Label>
+        </GroupBox.Header>
 
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50*"/>
-                <ColumnDefinition Width="30*"/>
+                <ColumnDefinition Width="30*" />
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="30*" />
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="30*" />
             </Grid.ColumnDefinitions>
-            <GroupBox Grid.Column="0" Margin="5" BorderBrush="Gray">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="45*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="45*"/>
+            </Grid.RowDefinitions>
+
+            <Button Grid.Column="0" Grid.Row="0" Command="{Binding AddShapeCommand}" Padding="10,5,10,5" Button.Background="White">
+                <StackPanel>
+                    <TextBlock HorizontalAlignment="Center" >Square</TextBlock>
+                    <Image Source="Images/Square.png"/>
+                </StackPanel>
+            </Button>
+
+            <Button Grid.Column="2" Grid.Row="0" Command="{Binding AddArrowCommand}" Padding="10,5,10,5" Button.Background="White">
+                <StackPanel>
+                    <TextBlock HorizontalAlignment="Center">Arrow</TextBlock>
+                    <Image Source="Images/Arrow.png" />
+                </StackPanel>
+            </Button>
+
+            <Button  Grid.Column="4" Grid.Row="0" Command="{Binding AddLineCommand}" Padding="10,5,10,5" Button.Background="White">
+                <StackPanel>
+                    <TextBlock HorizontalAlignment="Center">Line</TextBlock>
+                    <Image Source="Images/Line.png" />
+                </StackPanel>
+            </Button>
+
+            <TextBlock Grid.Column="0" Grid.Row="2"> Click to insert.</TextBlock>
+            <TextBlock Grid.Column="2" Grid.Row="2"> Click to insert.</TextBlock>
+            <TextBlock Grid.Column="4" Grid.Row="2"> Click on classes. <LineBreak/> From sender to <LineBreak/> reciever</TextBlock>
+
+        </Grid>
+    </GroupBox>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="30*"/>
+        </Grid.ColumnDefinitions>
+        <GroupBox Grid.Column="0" Margin="5" BorderBrush="Gray">
             <GroupBox.Header>
                 <Label>Classes</Label>
             </GroupBox.Header>
 
-                <DataGrid x:Name="shapesControl" Height="140" ItemsSource="{Binding Shapes}" HeadersVisibility="Column" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
-                    <DataGrid.Columns>
-                        <!-- It is important to understand that the DataContext 'inside' the DataGrid is a 'Shape' object from the MainViewModels 'Shapes' collection, -->
-                        <!--  which the DataGrid is bound to. -->
-                        <!-- The DataGrids columns are bound to the properties of the current Shape. -->
-                        <DataGridTextColumn Binding="{Binding Number}" Header="Number" Width="*" IsReadOnly="True"/>
-                        <DataGridTextColumn Binding="{Binding Height}" Header="Height" Width="*"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </GroupBox>
+            <DataGrid x:Name="shapesControl" Height="140" ItemsSource="{Binding Shapes}" HeadersVisibility="Column" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+                <DataGrid.Columns>
+                    <!-- It is important to understand that the DataContext 'inside' the DataGrid is a 'Shape' object from the MainViewModels 'Shapes' collection, -->
+                    <!--  which the DataGrid is bound to. -->
+                    <!-- The DataGrids columns are bound to the properties of the current Shape. -->
+                    <DataGridTextColumn Binding="{Binding Number}" Header="Number" Width="*" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding Height}" Header="Height" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </GroupBox>
 
-            <StackPanel Grid.Column="2">
-                <GroupBox Grid.Column="2" Margin="5" BorderBrush="Gray">
+        <StackPanel Grid.Column="2">
+            <GroupBox Grid.Column="2" Margin="5" BorderBrush="Gray">
                 <GroupBox.Header>
                     <Label>Undo or Redo</Label>
                 </GroupBox.Header>
@@ -106,17 +108,18 @@
                 </Grid>
             </GroupBox>
 
-            <GroupBox>
-                    <GroupBox.Header>
-                        <Label>Load and Save</Label>
-                    </GroupBox.Header>
-                    <StackPanel>
-                        <Button Grid.Row="0" Command="{Binding LoadCommand}" Padding="0,0,0,5">Load</Button>
-                        <Button Grid.Row="2" Command="{Binding SaveCommand}" Padding="0,0,0,5">Save</Button>
-                    </StackPanel>
-                </GroupBox>
-            </StackPanel>
-        </Grid>
+            <GroupBox BorderBrush="Gray">
+                <GroupBox.Header>
+                    <Label>Load and Save</Label>
+                </GroupBox.Header>
+                <StackPanel>
+                    <Button Grid.Row="0" Command="{Binding LoadCommand}" Padding="0,0,0,5">Load</Button>
+                    <Button Grid.Row="2" Command="{Binding SaveCommand}" Padding="0,0,0,5">Save</Button>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+    </Grid>
 
-    </StackPanel>
+</StackPanel>
+
 </UserControl>
