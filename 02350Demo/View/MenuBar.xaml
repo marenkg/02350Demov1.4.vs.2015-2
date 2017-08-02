@@ -15,17 +15,21 @@
                     </MenuItem.Icon>
             </MenuItem>-->
             <MenuItem x:Name="menuOpen" Header="_Open" InputGestureText="Ctrl+O" Command="{Binding LoadCommand}">
-                <!-- <MenuItem.Icon>
-                        <Image Source="./Resources/Open.bmp" />
-                    </MenuItem.Icon> -->
+                <MenuItem.Icon>
+                    <Image Source="./Icons/Open.png" />
+                </MenuItem.Icon>
             </MenuItem>
             <MenuItem x:Name="menuSave" Header="_Save" InputGestureText="Ctrl+S" Command="{Binding SaveCommand}">
-                <!--<MenuItem.Icon>
-                        <Image Source="./Resources/Save.bmp" />
-                    </MenuItem.Icon>-->
+                <MenuItem.Icon>
+                    <Image Source="./Icons/Save.png" />
+                </MenuItem.Icon>
             </MenuItem>
             <Separator />
-            <MenuItem x:Name="menuExit" Header="Exit" InputGestureText="Ctrl+F4" Command="{Binding ExitCommand}"/>
+            <MenuItem x:Name="menuExit" Header="Exit" Command="{Binding ExitCommand}" InputGestureText="Ctrl+F4">
+            <MenuItem.Icon>
+                <Image Source="./Icons/Exit.png" />
+            </MenuItem.Icon>
+        </MenuItem>
         </MenuItem>
         <MenuItem Header="_Edit">
             <MenuItem x:Name="menuCut" Header="Cut" Command="ApplicationCommands.Cut" InputGestureText="Ctrl+X"/>

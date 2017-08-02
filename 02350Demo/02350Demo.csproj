@@ -150,6 +150,15 @@
     <Resource Include="View\Images\Line.png" />
     <Resource Include="View\Images\Square.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\Icons\Save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\Icons\Open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\Icons\Exit.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
