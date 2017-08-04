@@ -97,8 +97,8 @@
     <Compile Include="View\SidePanelUserControl.xaml.cs">
       <DependentUpon>SidePanelUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\StatusBar.xaml.cs">
-      <DependentUpon>StatusBar.xaml</DependentUpon>
+    <Compile Include="View\Toolbar.xaml.cs">
+      <DependentUpon>Toolbar.xaml</DependentUpon>
     </Compile>
     <Page Include="View\LineUserControl.xaml">
       <SubType>Designer</SubType>
@@ -128,7 +128,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\StatusBar.xaml">
+    <Page Include="View\Toolbar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

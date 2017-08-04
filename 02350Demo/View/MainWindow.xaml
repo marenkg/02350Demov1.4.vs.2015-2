@@ -29,6 +29,7 @@
     <StackPanel Orientation="Vertical">
         <!-- The Controls (visual components), in the left side of the View (Window) are defined in the 'SidePanelUserControl'-->
         <View:MenuBar/>
+        <View:Toolbar/>
         <View:SidePanelUserControl RenderTransformOrigin="0.144,0.526" Margin="0,0,886,0"/>
 
         <!-- This creates a grid to the right in the StackPanel, with only 1 column and 1 row, but the Grid is necessary to put the 2 ItemsControls in the same area on top of each other -->
