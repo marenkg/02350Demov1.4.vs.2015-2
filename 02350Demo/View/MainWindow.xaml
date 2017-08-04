@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:ViewModel="clr-namespace:_02350Demo.ViewModel"
         xmlns:View="clr-namespace:_02350Demo.View"
-        Title="Class Diagram Creator" Height="900" Width="1200" >
+        Title="Class Diagram Creator" Height="800" Width="1000" >
     <!-- This is where you set the Data Context of the View (Window), which tells the WPF engine where to look for the properties used by the bindings. -->
     <!-- The namespace of the MainViewModel class has to be specified above, this is important to remember, to avoid a lot of problems in getting bindings to work. -->
     <!-- Also the namespaces (Java: packages) has to be defined, for the used classes that are not part of WPF, -->
@@ -13,7 +13,7 @@
     <Window.DataContext>
         <ViewModel:MainViewModel />
     </Window.DataContext>
-    
+
     <!-- Global key bindings -->
     <Window.InputBindings>
         <KeyBinding Modifiers="Control" Key="Z" Command="{Binding UndoCommand}" />
@@ -27,10 +27,7 @@
     <!-- The StackPanel organizes things from left to right, because the orientation is set to Horizontal. -->
     <!-- The ItemControls shows the objects they are bound, using the DataTemplates defined in the App.xaml file. -->
     <StackPanel Orientation="Vertical">
-        <!-- The Controls (visual components), in the left side of the View (Window) are defined in the 'SidePanelUserControl'-->
-        <View:MenuBar/>
-        <View:Toolbar/>
-        <View:SidePanelUserControl RenderTransformOrigin="0.144,0.526" Margin="0,0,886,0"/>
+
 
         <!-- This creates a grid to the right in the StackPanel, with only 1 column and 1 row, but the Grid is necessary to put the 2 ItemsControls in the same area on top of each other -->
         <Grid>
@@ -42,5 +39,8 @@
             <ItemsControl ItemsSource="{Binding Lines}"/>
             <ItemsControl ItemsSource="{Binding Shapes}" Margin="5,0,-5,0"/>
         </Grid>
+        <!-- The Controls (visual components), in the left side of the View (Window) are defined in the 'SidePanelUserControl'-->
+        <View:MenuBar/>
+        <View:Toolbar Height="108"/>
     </StackPanel>
 </Window>
