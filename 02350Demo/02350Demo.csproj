@@ -81,6 +81,7 @@
     <Compile Include="Command\AddShapeCommand.cs" />
     <Compile Include="Command\IUndoRedoCommand.cs" />
     <Compile Include="Command\MoveShapeCommand.cs" />
+    <Compile Include="Command\MoveThumb.cs" />
     <Compile Include="Command\RemoveLinesCommand.cs" />
     <Compile Include="Command\RemoveShapesCommand.cs" />
     <Compile Include="Command\UndoRedoController.cs" />
@@ -118,10 +119,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\ResizeDecorator.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="View\ShapeUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
