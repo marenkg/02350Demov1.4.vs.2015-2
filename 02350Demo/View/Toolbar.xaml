@@ -5,40 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:_02350Demo.View"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="1200">
+             d:DesignHeight="110" d:DesignWidth="584">
     <ToolBarTray DockPanel.Dock="Top">
-        
-        
+
+
 
         <ToolBar>
 
-            
-
-
-
-            <!--      <Button ToolTip="Click to insert." Command="{Binding AddShapeCommand}" Padding="10,5,10,5" Button.Background="White">
-                <StackPanel>
-                    <TextBlock HorizontalAlignment="Center" >Square</TextBlock>
-                    <Image Source="Images/Square.png"/>
-                 </StackPanel>
-            </Button>
-
-            <Button ToolTip="Click to insert." Command="{Binding AddArrowCommand}" Padding="10,5,10,5" Button.Background="White">
-                <StackPanel>
-                    <TextBlock HorizontalAlignment="Center">Arrow</TextBlock>
-                    <Image Source="Images/Arrow.png" />
-                </StackPanel>
-            </Button>
-
-            <Button  ToolTip="Click on classes – From sender to reciever" Command="{Binding AddLineCommand}" Padding="10,5,10,5" Button.Background="White">
-                <StackPanel>
-                    <TextBlock HorizontalAlignment="Center">Line</TextBlock>
-                    <Image Source="Images/Line.png" />
-                </StackPanel>
-            </Button> -->
-
-            
-            <GroupBox Margin="5" BorderBrush="Gray">
+            <GroupBox Margin="0,-9,0,64" BorderBrush="Gray">
                 <GroupBox.Header>
                     <Label>Insert Elements</Label>
                 </GroupBox.Header>
@@ -60,7 +34,7 @@
 
                     <Button Grid.Column="0" Grid.Row="0" ToolTip="Click to insert." Command="{Binding AddShapeCommand}" Padding="10,5,10,5" Button.Background="White">
                         <StackPanel>
-                            <TextBlock HorizontalAlignment="Center" >Square</TextBlock>
+                            <TextBlock HorizontalAlignment="Center" >Class</TextBlock>
                             <Image Source="Images/Square.png"/>
                         </StackPanel>
                     </Button>
@@ -79,33 +53,13 @@
                         </StackPanel>
                     </Button>
 
-                    <!--<TextBlock Grid.Column="0" Grid.Row="2"> Click to insert.</TextBlock>
-                    <TextBlock Grid.Column="2" Grid.Row="2"> Click to insert.</TextBlock>
-                    <TextBlock Grid.Column="4" Grid.Row="2"> Click on classes. <LineBreak/> From sender to <LineBreak/> reciever</TextBlock> -->
-
+                 
                 </Grid>
             </GroupBox>
 
-                <GroupBox Grid.Column="2" Margin="5" BorderBrush="Gray">
-                    <GroupBox.Header>
-                        <Label>Undo or Redo</Label>
-                    </GroupBox.Header>
-
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="40*" />
-                            <RowDefinition Height="20*" />
-                            <RowDefinition Height="40*" />
-                        </Grid.RowDefinitions>
-
-                    <Button Grid.Row="0" Command="{Binding UndoCommand}" Button.Background="White" Padding="0,0,0,0">Undo</Button>
-                    <Button Grid.Row="2" Command="{Binding RedoCommand}" Button.Background="White" Padding="0,0,0,0">Redo</Button>
-                    </Grid>
-                </GroupBox>
-
-            <GroupBox Grid.Column="0" Margin="5" BorderBrush="Gray">
+            <GroupBox Grid.Column="2" Margin="0,-9,0,63" BorderBrush="Gray">
                 <GroupBox.Header>
-                    <Label>Classes</Label>
+                    <Label>Undo or Redo</Label>
                 </GroupBox.Header>
 
                 <Grid>
@@ -115,7 +69,28 @@
                         <RowDefinition Height="40*" />
                     </Grid.RowDefinitions>
 
-                    <DataGrid x:Name="shapesControl" Height="140" ItemsSource="{Binding Shapes}" HeadersVisibility="Column" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+                    <Button Grid.Row="0" Command="{Binding UndoCommand}" Button.Background="White" Padding="0,0,0,0" Margin="0,0,0,10" Grid.RowSpan="2">Undo</Button>
+                    <Button Grid.Row="1" Command="{Binding RedoCommand}" Button.Background="White" Padding="0,0,0,0" Margin="0,10,0,0" Grid.RowSpan="2">Redo</Button>
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Grid.Column="0" Margin="0,-9,0,63" BorderBrush="Gray" Width="230" RenderTransformOrigin="1.366,0.514">
+                <GroupBox.Header>
+                    <Label>Classes</Label>
+                </GroupBox.Header>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="56*"/>
+                        <ColumnDefinition Width="53*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40*" />
+                        <RowDefinition Height="20*" />
+                        <RowDefinition Height="40*" />
+                    </Grid.RowDefinitions>
+
+                    <DataGrid x:Name="shapesControl" ItemsSource="{Binding Shapes}" HeadersVisibility="Column" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" Grid.RowSpan="3" Grid.ColumnSpan="2">
                         <DataGrid.Columns>
                             <!-- It is important to understand that the DataContext 'inside' the DataGrid is a 'Shape' object from the MainViewModels 'Shapes' collection, -->
                             <!--  which the DataGrid is bound to. -->
@@ -126,31 +101,6 @@
                     </DataGrid>
                 </Grid>
             </GroupBox>
-
-            <!--  <Button x:Name="tbOpen" ToolTip="Open File" Click="MenuOpen_Click">
-                <Image Source="./Resources/Open.bmp"></Image>
-            </Button>
-            <Button x:Name="tbSave" ToolTip="Save File" Click="MenuSave_Click">
-                <Image Source="./Resources/Save.bmp"></Image>
-            </Button>
-            <Button x:Name="tbCut" Command="ApplicationCommands.Cut">
-                <Image Source="./Resources/Cut.bmp"></Image>
-            </Button>
-            <Button x:Name="tbCopy" Command="ApplicationCommands.Copy">
-                <Image Source="./Resources/Copy.bmp"></Image>
-            </Button>
-            <Button x:Name="tbPaste" Command="ApplicationCommands.Paste">
-                <Image Source="./Resources/Paste.bmp"></Image>
-            </Button>
-            <Separator />
-            <Label>Font size:</Label>
-            <ComboBox x:Name="comboFontSize" SelectionChanged="ComboFontSize_SelectionChanged"
-                          DropDownClosed="ComboFontSize_DropDownClosed">
-                <ComboBoxItem>10</ComboBoxItem>
-                <ComboBoxItem IsSelected="True">12</ComboBoxItem>
-                <ComboBoxItem>14</ComboBoxItem>
-                <ComboBoxItem>16</ComboBoxItem>
-            </ComboBox> -->
 
         </ToolBar>
     </ToolBarTray>
