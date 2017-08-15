@@ -83,6 +83,7 @@
     <Compile Include="Command\MoveShapeCommand.cs" />
     <Compile Include="Command\RemoveLinesCommand.cs" />
     <Compile Include="Command\RemoveShapesCommand.cs" />
+    <Compile Include="Command\ResizeItemCommand.cs" />
     <Compile Include="Command\UndoRedoController.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="View\LineUserControl.xaml.cs">
