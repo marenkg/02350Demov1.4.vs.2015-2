@@ -66,7 +66,7 @@ namespace _02350Demo.Command
             //
             //    linesToRemove.Add(line);
             //  }
-            linesToRemove = _lines.Where(x => _shapesToRemove.Any(y => y.Number == x.From.Number || y.Number == x.To.Number)).ToList();
+            linesToRemove = _lines.Where(x => _shapesToRemove.Any(y => y.Number == x.Source.Number || y.Number == x.Sink.Number)).ToList();
         }
 
         #endregion
