@@ -280,7 +280,7 @@ namespace _02350Demo.ViewModel
                 {
                     // Now that it has been established that the Line adding operation has been completed succesfully by the user, 
                     //  a Line is added using an 'AddLineCommand', with a new Line given between the two shapes chosen.
-                    undoRedoController.AddAndExecute(new AddLineCommand(Lines, new Line() { From = addingLineFrom, To = shape }));
+                    undoRedoController.AddAndExecute(new AddLineCommand(Lines, new Line() { Source = addingLineFrom, Sink = shape }));
                     // The property used for visually indicating that a Line is being Drawn is cleared, 
                     //  so the View can return to its original and default apperance.
                     addingLineFrom.IsSelected = false;
