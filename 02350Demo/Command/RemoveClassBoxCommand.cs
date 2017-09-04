@@ -5,12 +5,13 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using _02350Demo.ViewModel;
 
 namespace _02350Demo.Command
 {
     // Undo/Redo command for removing Shapes.
     // It also removes the Lines connected to the Shapes.
-    public class RemoveShapesCommand : IUndoRedoCommand
+    public class RemoveClassBoxCommand : IUndoRedoCommand
     {
         // Regions can be used to make code foldable (minus/plus sign to the left).
         #region Fields
@@ -20,7 +21,7 @@ namespace _02350Demo.Command
         //  therefore when this collection is changed in a object of this class, 
         //  it also changes the collection that the MainViewModel uses.
         // For a description of an ObservableCollection see the MainViewModel class.
-        private ObservableCollection<ClassBox> shapes;
+        private ObservableCollection<ClassBoxViewModel> shapes;
 
         // The 'lines' field holds the current collection of lines, 
         //  and the reference points to the same collection as the one the MainViewModel point to, 
@@ -31,7 +32,7 @@ namespace _02350Demo.Command
 
         // The 'shapesToRemove' field holds a collection of existing shapes, that are removed from the 'shapes' collection, 
         //  and if undone, they are added to the collection.
-        private List<ClassBox> shapesToRemove;
+        private List<ClassBoxViewModel> shapesToRemove;
 
         // The 'linesToRemove' field holds a collection of existing lines, that are removed from the 'lines' collection, 
         //  and if undone, they are added to the collection.
@@ -42,7 +43,7 @@ namespace _02350Demo.Command
         #region Constructor
 
         // For the current state of the diagram.
-        public RemoveShapesCommand(ObservableCollection<ClassBox> _shapes, ObservableCollection<Line> _lines, List<ClassBox> _shapesToRemove)
+        public RemoveClassBoxCommand(ObservableCollection<ClassBoxViewModel> _shapes, ObservableCollection<Line> _lines, List<ClassBoxViewModel> _shapesToRemove)
         {
             shapes = _shapes;
             lines = _lines;
@@ -66,7 +67,7 @@ namespace _02350Demo.Command
             //
             //    linesToRemove.Add(line);
             //  }
-            linesToRemove = _lines.Where(x => _shapesToRemove.Any(y => y.Number == x.Source.Number || y.Number == x.Sink.Number)).ToList();
+            //linesToRemove = _lines.Where(x => _shapesToRemove.Any(y => y.Number == x.Source.Number || y.Number == x.Sink.Number)).ToList();
         }
 
         #endregion

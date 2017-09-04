@@ -32,7 +32,7 @@
                         <RowDefinition Height="45*"/>
                     </Grid.RowDefinitions>
 
-                    <Button Grid.Column="0" Grid.Row="0" ToolTip="Click to insert." Command="{Binding AddShapeCommand}" Padding="10,5,10,5" Button.Background="White">
+                    <Button Grid.Column="0" Grid.Row="0" ToolTip="Click to insert." Command="{Binding AddClassBoxCommand}" Padding="10,5,10,5" Button.Background="White">
                         <StackPanel>
                             <TextBlock HorizontalAlignment="Center" >Class</TextBlock>
                             <Image Source="Images/Square.png"/>

@@ -78,13 +78,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Command\AddLineCommand.cs" />
-    <Compile Include="Command\AddShapeCommand.cs" />
+    <Compile Include="Command\AddClassBoxCommand.cs" />
     <Compile Include="Command\IUndoRedoCommand.cs" />
     <Compile Include="Command\MoveShapeCommand.cs" />
     <Compile Include="Command\RemoveLinesCommand.cs" />
-    <Compile Include="Command\RemoveShapesCommand.cs" />
+    <Compile Include="Command\RemoveClassBoxCommand.cs" />
     <Compile Include="Command\ResizeItemCommand.cs" />
     <Compile Include="Command\UndoRedoController.cs" />
+    <Compile Include="ViewModel\ClassBoxViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="View\LineUserControl.xaml.cs">
       <DependentUpon>LineUserControl.xaml</DependentUpon>
@@ -92,8 +93,8 @@
     <Compile Include="View\MenuBar.xaml.cs">
       <DependentUpon>MenuBar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ShapeUserControl.xaml.cs">
-      <DependentUpon>ShapeUserControl.xaml</DependentUpon>
+    <Compile Include="View\ClassBoxUserControl.xaml.cs">
+      <DependentUpon>ClassBoxUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SidePanelUserControl.xaml.cs">
       <DependentUpon>SidePanelUserControl.xaml</DependentUpon>
@@ -121,7 +122,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\ShapeUserControl.xaml">
+    <Page Include="View\ClassBoxUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

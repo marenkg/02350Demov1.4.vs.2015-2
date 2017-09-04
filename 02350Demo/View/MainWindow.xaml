@@ -37,7 +37,7 @@
             <!-- These ItemsControls are bound to the public Lines and Shapes properties of the MainViewModel class. -->
             <!-- The order of the ItemsControls are important as the Lines will be shown first with the Shapes on top, try switching them. -->
             <ItemsControl ItemsSource="{Binding Lines}"/>
-            <ItemsControl ItemsSource="{Binding Shapes}" Margin="5,0,-5,0"/>
+            <ItemsControl ItemsSource="{Binding ClassBoxes}" Margin="5,0,-5,0"/>
         </Grid>
         <!-- The Controls (visual components), in the left side of the View (Window) are defined in the 'SidePanelUserControl'-->
         <View:MenuBar/>

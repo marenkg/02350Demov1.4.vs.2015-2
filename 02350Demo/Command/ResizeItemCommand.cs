@@ -26,13 +26,13 @@ namespace _02350Demo.Command
         {
             if (offsetLeft != 0.0)
             {
-                classBox.CanvasCenterX += - offsetLeft / 2;
-                classBox.Width += offsetLeft;
+                //classBox.CanvasCenterX += - offsetLeft / 2;
+                //classBox.Width += offsetLeft;
             }
             else
             {
-                classBox.CanvasCenterX += offsetRight / 2;
-                classBox.Width += offsetRight;
+                //classBox.CanvasCenterX += offsetRight / 2;
+                //classBox.Width += offsetRight;
             }
         }
 

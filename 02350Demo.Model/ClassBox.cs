@@ -3,177 +3,81 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 
 namespace _02350Demo.Model
 {
     // The Shape class descripes a shape with a position (X and Y), and a size (Width and Height).
     //[Serializable]
-    public class ClassBox : NotifyBase
+    public class ClassBox
     {
-        // For a description of the Getter/Setter Property syntax ("{ get { ... } set { ... } }") see the Line class.
-        // The static integer counter field is used to set the integer Number property to a unique number for each Shape object.
-        //[NonSerialized]
+ 
         private static int counter = 0;
 
-        // The Number integer property holds a unique integer for each Shape object to identify them in the View (GUI) layer.
-        // The "{ get; }" syntax describes that a private field 
-        //  and default getter method should be generated.
         public int Number { get; }
+        private double _x = 200;
+        public double X {get { return _x; } set { _x = value; UpdateConnectionPoints(); }}
 
-        private double x = 200;
-        // The reason no string is given to the 'NotifyPropertyChanged' method is because, 
-        //  it uses the compiler to get the name of the calling property, 
-        //  which in this case is the name of the property that has changed.
-        // A lambda expression can be given, because the 'NotifyPropertyChanged' method can get the property name from it.
-        // Java:
-        //  private double x;
-        // 
-        //  public double getX(){
-        //    return x;
-        //  }
-        //
-        //  public void setX(double value){
-        //    x = value;
-        //    NotifyPropertyChanged();
-        //    NotifyPropertyChanged("CanvasCenterX");
-        //  }
-        public double X { get { return x; } set { x = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => CanvasCenterX); } }
+        private double _y = 200; 
+        public double Y { get { return _y; } set { _y = value; UpdateConnectionPoints(); } }
 
-        private double y = 200;
-        // The reason no string is given to the 'NotifyPropertyChanged' method is because, 
-        //  it uses the compiler to get the name of the calling property, 
-        //  which in this case is the name of the property that has changed.
-        // A lambda expression can be given, because the 'NotifyPropertyChanged' method can get the property name from it.
-        // Java:
-        //  private double y;
-        // 
-        //  public double getY(){
-        //    return y;
-        //  }
-        //
-        //  public void setY(double value){
-        //    y = value;
-        //    NotifyPropertyChanged();
-        //    NotifyPropertyChanged("CanvasCenterY");
-        //  }
-        public double Y { get { return y; } set { y = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => CanvasCenterY); } }
+        private double _width = 100;
+        public double Width { get { return _width; } set { _width = value; UpdateConnectionPoints(); } }
 
-        private double width = 100;
-        // The reason no string is given to the 'NotifyPropertyChanged' method is because, 
-        //  it uses the compiler to get the name of the calling property, 
-        //  which in this case is the name of the property that has changed.
-        // A lambda expression can be given, because the 'NotifyPropertyChanged' method can get the property name from it.
-        // Java:
-        //  private double width;
-        // 
-        //  public double getWidth(){
-        //    return width;
-        //  }
-        //
-        //  public void setWidth(double value){
-        //    width = value;
-        //    NotifyPropertyChanged();
-        //    NotifyPropertyChanged("CanvasCenterX");
-        //    NotifyPropertyChanged("CenterX");
-        //  }
-        public double Width { get { return width; } set { width = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => CanvasCenterX); NotifyPropertyChanged(() => CenterX); } }
+        private double _height = 100;
+        public double Height { get { return _height; } set { _height = value; UpdateConnectionPoints(); } }
 
-        private double height = 100;
-        // The reason no string is given to the 'NotifyPropertyChanged' method is because, 
-        //  it uses the compiler to get the name of the calling property, 
-        //  which in this case is the name of the property that has changed.
-        // A lambda expression can be given, because the 'NotifyPropertyChanged' method can get the property name from it.
-        // Java:
-        //  private double height;
-        // 
-        //  public double getHeight(){
-        //    return height;
-        //  }
-        //
-        //  public void setHeight(double value){
-        //    height = value;
-        //    NotifyPropertyChanged();
-        //    NotifyPropertyChanged("CanvasCenterY");
-        //    NotifyPropertyChanged("CenterY");
-        //  }
-        public double Height { get { return height; } set { height = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => CanvasCenterY); NotifyPropertyChanged(() => CenterY); } }
+        public String ContentClass { get; set; }
+        public String ContentFields { get; set; }
 
-        // Derived properties.
-        // Corresponds to making a Getter method in Java (for instance 'public int GetCenterX()'), 
-        //  that does not have its own private field, but is calculated from other fields and properties. } }
-        // The CanvasCenterX and CanvasCenterY derived properties are used by the Line class, 
-        //  so it can be drawn from the center of one Shape to the center of another Shape.
-        // NOTE: In the 02350SuperSimpleDemo these derived properties are called CenterX and CenterY, 
-        //        but in this demo we need both these and derived properties for the coordinates of the Shape, 
-        //        relative to the upper left corner of the Shape. This is an example of a breaking change, 
-        //        that is changed during the lifetime of an application, because the requirements change.
+        public String ContentMethods { get; set; }
 
-        // A lambda expression can be given, because the 'NotifyPropertyChanged' method can get the property name from it.
-        public double CanvasCenterX { get { return X + Width / 2; } set { X = value - Width / 2; NotifyPropertyChanged(() => X); } }
+        // South West Nort EASt
 
-        // A lambda expression can be given, because the 'NotifyPropertyChanged' method can get the property name from it.
-        public double CanvasCenterY { get { return Y + Height / 2; } set { Y = value - Height / 2; NotifyPropertyChanged(() => Y); } }
+        public Point South { get; set; }
+        public Point North { get; set; }
+        public Point East { get; set; }
+        public Point West { get; set; }
 
-        // The CenterX and CenterY properties are used by the Shape animation to define the point of rotation.
-        // NOTE: These derived properties are diffent from the Shape properties with the same names, 
-        //        from the 02350SuperSimpleDemo, see above for an explanation.
-        // This method uses an expression-bodied member (http://www.informit.com/articles/article.aspx?p=2414582) to simplify a method that only returns a value;
-        // Java:
-        //  public double getCenterX(){
-        //    return X + Width / 2;
-        //  }
-        public double CenterX => Width / 2;
-
-        // Java:
-        // This method uses an expression-bodied member (http://www.informit.com/articles/article.aspx?p=2414582) to simplify a method that only returns a value;
-        //  public double getCenterY(){
-        //    return Y + Height / 2;
-        //  }
-        public double CenterY => Height / 2;
-
-        // ViewModel properties.
-        // These properties should be in the ViewModel layer, but it is easier for the demo to put them here, 
-        //  to avoid unnecessary complexity.
-        // NOTE: This breaks the seperation of layers of the MVVM architecture pattern.
-        //       To avoid this a ShapeViewModel class should be created that wraps all Shape objects, 
-        //        but it adds to the complexity of the ViewModel layer and this demo and a simpler solution was chosen for the demo.
-        //        (this also adds a reference to the PresentationCore class library which is part of .NET, 
-        //         but should not be used in the Model layer, creating an unnecessary dependency for the Model layer class library).
-        //       To learn how to avoid this and create an application with a more pure MVVM architecture pattern, 
-        //        please ask the Teaching Assistants.
-        [NonSerialized]
-        private bool isSelected;
-        // The reason no string is given to the 'NotifyPropertyChanged' method is because, 
-        //  it uses the compiler to get the name of the calling property, 
-        //  which in this case is the name of the property that has changed.
-        // A lambda expression can be given, because the 'NotifyPropertyChanged' method can get the property name from it.
-        public bool IsSelected { get { return isSelected; } set { isSelected = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => SelectedColor); } }
-        // This method uses an expression-bodied member (http://www.informit.com/articles/article.aspx?p=2414582) to simplify a method that only returns a value;
-        public Brush SelectedColor => IsSelected ? Brushes.Red : Brushes.DarkRed;
-
-        // Constructor.
-        // The constructor is in this case used to set the default values for the properties.
-        public ClassBox()
+        // Used every time the X or Y coordinate is set
+        public void UpdateConnectionPoints()
         {
-            // This just means that the integer field called counter is incremented before its value is used to set the Number integer property.
-            Number = ++counter;
+            South = new Point(X + Width / 2, Y);
+            North = new Point(X + Width / 2, Y + Height);
+            East = new Point(X + Width , Y + Height / 2);
+            West = new Point(X, Y + Height / 2);
         }
 
-        // By overwriting the ToString() method, the default representation of the class is changed from the full namespace (Java: package) name, 
-        //  to the value of the Number integer property, which is meant to be unique for each Shape object.
-        // The ToString() method is inheritied from the Object class, that all classes inherit from.
-        // This method uses an expression-bodied member (http://www.informit.com/articles/article.aspx?p=2414582) to simplify a method that only returns a value;
+
+        public double CanvasCenterX
+        {
+            get { return X + Width / 2; }
+        }
+ 
+        public double CanvasCenterY
+        {
+            get { return Y + Height / 2; }
+        }
+
+        public Brush Color { get; set; }
+
+        public ClassBox()
+        {
+            Number = ++counter;
+            UpdateConnectionPoints();
+        }
+
         public override string ToString() => Number.ToString();
 
         public Object Serialize()
         {
             // Please find a better way of doing this ...
             Dictionary<string, double> o = new Dictionary<string, double>(4);
-            o.Add("x", x);
-            o.Add("y", y);
-            o.Add("width", width);
-            o.Add("height", height);
+            o.Add("x", X);
+            o.Add("y", Y);
+            o.Add("width", Width);
+            o.Add("height", Height);
             return o;
         }
 
@@ -181,10 +85,18 @@ namespace _02350Demo.Model
         {
             try {
                 var obj = (Dictionary<string, double>)o;
+                double x;
+                double y;
+                double width;
+                double height;
                 obj.TryGetValue("x", out x);
                 obj.TryGetValue("y", out y);
                 obj.TryGetValue("width", out width);
                 obj.TryGetValue("height", out height);
+                X = x;
+                Y = y;
+                Width = width;
+                Height = Height;
             } finally
             {
                 // tja

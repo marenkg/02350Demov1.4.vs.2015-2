@@ -18,9 +18,9 @@ namespace _02350Demo.View
     /// <summary>
     /// Interaction logic for NodeUserControl.xaml
     /// </summary>
-    public partial class ShapeUserControl : UserControl
+    public partial class ClassBoxUserControl : UserControl
     {
-        public ShapeUserControl()
+        public ClassBoxUserControl()
         {
             InitializeComponent();
         }

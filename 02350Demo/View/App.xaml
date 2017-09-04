@@ -1,8 +1,9 @@
 ﻿<Application x:Class="_02350Demo.View.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:Model="clr-namespace:_02350Demo.Model;assembly=02350Demo.Model"
+             xmlns:VM="clr-namespace:_02350Demo.ViewModel"
              xmlns:View="clr-namespace:_02350Demo.View"
+             xmlns:model="clr-namespace:_02350Demo.Model;assembly=02350Demo.Model"
              StartupUri="MainWindow.xaml">
     <!-- This is where resources are defines for alle windows to use. -->
     <Application.Resources>
@@ -10,14 +11,14 @@
         <!-- This Visual description is defined in the 'NodeUserControl'. -->
         <!-- If you remove this template the Shape will be show with a TextBlock, that shows the return value of the "ToString()" method. -->
         <!-- The Data Type tells the WPF engine, that this Data Template should be applied for the Shape class, in the Model namespace (Java: package). -->
-        <DataTemplate DataType="{x:Type Model:ClassBox}">
+        <DataTemplate DataType="{x:Type VM:ClassBoxViewModel}">
             <Canvas>
-                <View:ShapeUserControl/>
+                <View:ClassBoxUserControl/>
             </Canvas>
         </DataTemplate>
         <!-- This Data Template tells the View (Window) how to visually show the Line class. -->
         <!-- This Visual description is defined in the 'EdgeUserControl'. -->
-        <DataTemplate DataType="{x:Type Model:Line}">
+        <DataTemplate DataType="{x:Type model:Line}">
             <Canvas>
                 <View:LineUserControl/>
             </Canvas>

@@ -44,15 +44,15 @@ namespace _02350Demo.Command
         // For doing and redoing the command.
         public void Execute()
         {
-            shape.CanvasCenterX += offsetX;
-            shape.CanvasCenterY += offsetY;
+           // shape.CanvasCenterX += offsetX;
+            //shape.CanvasCenterY += offsetY;
         }
 
         // For undoing the command.
         public void UnExecute()
         {
-            shape.CanvasCenterX -= offsetX;
-            shape.CanvasCenterY -= offsetY;
+            //shape.CanvasCenterX -= offsetX;
+            //shape.CanvasCenterY -= offsetY;
         }
 
         #endregion

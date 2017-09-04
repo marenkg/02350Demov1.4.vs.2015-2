@@ -51,7 +51,7 @@ namespace _02350Demo.ViewModel
         // The "{ get; set; }" syntax describes that a private field 
         //  and default getter setter methods should be generated.
         // This is called Auto-Implemented Properties (http://msdn.microsoft.com/en-us/library/bb384054.aspx).
-        public ObservableCollection<ClassBox> Shapes { get; set; }
+        public ObservableCollection<ClassBoxViewModel> ClassBoxes { get; set; }
         public ObservableCollection<Line> Lines { get; set; }
 
         // Commands that the UI can be bound to.
@@ -60,14 +60,14 @@ namespace _02350Demo.ViewModel
         public ICommand RedoCommand { get; }
 
         // Commands that the UI can be bound to.
-        public ICommand AddShapeCommand { get; }
+        public ICommand AddClassBoxCommand { get; }
         public ICommand RemoveShapeCommand { get; }
         public ICommand AddLineCommand { get; }
         public ICommand RemoveLinesCommand { get; }
 
         public ICommand LoadCommand { get; }
         public ICommand SaveCommand { get; }
-      //  public ICommand ExitCommand { get; }
+        //public ICommand ExitCommand { get; }
 
 
         // Commands that the UI can be bound to.
@@ -88,7 +88,7 @@ namespace _02350Demo.ViewModel
             // Also a constructor could be created for the Shape class that takes the parameters (X, Y, Width and Height), 
             //  and the following could be done:
             // new Shape(30, 40, 80, 80);
-            Shapes = new ObservableCollection<ClassBox>() { 
+            ClassBoxes = new ObservableCollection<ClassBoxViewModel>() { 
 
             };
             // Here the list of Lines i filled with 1 Line that connects the 2 Shapes in the Shapes collection.
@@ -104,8 +104,8 @@ namespace _02350Demo.ViewModel
             RedoCommand = new RelayCommand(undoRedoController.Redo, undoRedoController.CanRedo);
 
             // The commands are given the methods they should use to execute, and find out if they can execute.
-            AddShapeCommand = new RelayCommand(AddShape);
-            RemoveShapeCommand = new RelayCommand<IList>(RemoveShape, CanRemoveShape);
+            AddClassBoxCommand = new RelayCommand(AddClassBox);
+            RemoveShapeCommand = new RelayCommand<IList<ClassBoxViewModel>>(RemoveShape, CanRemoveShape);
             AddLineCommand = new RelayCommand(AddLine);
             RemoveLinesCommand = new RelayCommand<IList>(RemoveLines, CanRemoveLines);
 
@@ -128,9 +128,9 @@ namespace _02350Demo.ViewModel
         //}
 
         // Adds a Shape with an AddShapeCommand.
-        private void AddShape()
+        private void AddClassBox()
         {
-            undoRedoController.AddAndExecute(new AddShapeCommand(Shapes, new ClassBox()));
+            undoRedoController.AddAndExecute(new AddClassBoxCommand(ClassBoxes, new ClassBoxViewModel()));
         }
 
         private void LoadData()
@@ -143,7 +143,7 @@ namespace _02350Demo.ViewModel
                 // check file exist, etc?
 
                 // Delete any created objs:
-                Shapes.Clear();
+                ClassBoxes.Clear();
                 Lines.Clear();
                 // TODO: empty undoRedo stack
 
@@ -155,7 +155,7 @@ namespace _02350Demo.ViewModel
                 data.ToList().ForEach(serializeShapeData => {
                     ClassBox shape = new ClassBox();
                     shape.LoadSerializedData(serializeShapeData);
-                    Shapes.Add(shape);
+                    ClassBoxes.Add(new ClassBoxViewModel(shape));
                 });
 
                 stream.Close();
@@ -172,9 +172,9 @@ namespace _02350Demo.ViewModel
 
                 IFormatter formatter = new BinaryFormatter();
                 LinkedList<Object> ObservableCollection = new LinkedList<Object>();
-                foreach (var shape in Shapes)
+                foreach (var shape in ClassBoxes)
                 {
-                    ObservableCollection.AddFirst( shape.Serialize() );
+                    ObservableCollection.AddFirst( shape.classBox.Serialize() );
                 }
                 formatter.Serialize(stream, ObservableCollection);
 
@@ -184,12 +184,12 @@ namespace _02350Demo.ViewModel
 
         // Checks if the chosen Shapes can be removed, which they can if exactly 1 is chosen.
         // This method uses an expression-bodied member (http://www.informit.com/articles/article.aspx?p=2414582) to simplify a method that only returns a value;
-        private bool CanRemoveShape(IList _shapes) => _shapes.Count == 1;
+        private bool CanRemoveShape(IList<ClassBoxViewModel> _shapes) => _shapes.Count == 1;
 
         // Removes the chosen Shapes with a RemoveShapesCommand.
-        private void RemoveShape(IList _shapes)
+        private void RemoveShape(IList<ClassBoxViewModel> classBoxes)
         {
-            undoRedoController.AddAndExecute(new RemoveShapesCommand(Shapes, Lines, _shapes.Cast<ClassBox>().ToList()));
+            undoRedoController.AddAndExecute(new RemoveClassBoxCommand(ClassBoxes, Lines, classBoxes.ToList()));
         }
 
         // Starts the procedure to remove a Line, by changing the mode to 'isAddingLine', 
@@ -273,7 +273,9 @@ namespace _02350Demo.ViewModel
                 //  by looking at the addingLineFrom variable, which is empty when no Shapes have previously been choosen.
                 // If this is the first Shape choosen, and if so, the Shape is saved in the AddingLineFrom variable.
                 //  Also the Shape is set as selected, to make it look different visually.
-                if (addingLineFrom == null) { addingLineFrom = shape; addingLineFrom.IsSelected = true; }
+                if (addingLineFrom == null) { addingLineFrom = shape;
+                   // addingLineFrom.IsSelected = true;
+                }
                 // If this is not the first Shape choosen, and therefore the second, 
                 //  it is checked that the first and second Shape are different.
                 else if (addingLineFrom.Number != shape.Number)
@@ -283,7 +285,7 @@ namespace _02350Demo.ViewModel
                     undoRedoController.AddAndExecute(new AddLineCommand(Lines, new Line() { Source = addingLineFrom, Sink = shape }));
                     // The property used for visually indicating that a Line is being Drawn is cleared, 
                     //  so the View can return to its original and default apperance.
-                    addingLineFrom.IsSelected = false;
+                    //addingLineFrom.IsSelected = false;
                     // The 'isAddingLine' and 'addingLineFrom' variables are cleared, 
                     //  so the MainViewModel is ready for another Line adding operation.
                     isAddingLine = false;

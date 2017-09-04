@@ -5,34 +5,31 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using _02350Demo.ViewModel;
 
 namespace _02350Demo.Command
 {
     // Undo/Redo command for adding a Shape.
-    public class AddShapeCommand : IUndoRedoCommand
+    public class AddClassBoxCommand : IUndoRedoCommand
     {
         // Regions can be used to make code foldable (minus/plus sign to the left).
         #region Fields
 
-        // The 'shapes' field holds the current collection of shapes, 
-        //  and the reference points to the same collection as the one the MainViewModel point to, 
-        //  therefore when this collection is changed in a object of this class, 
-        //  it also changes the collection that the MainViewModel uses.
-        // For a description of an ObservableCollection see the MainViewModel class.
-        private ObservableCollection<ClassBox> shapes;
+
+        private ObservableCollection<ClassBoxViewModel> classBoxes;
         // The 'shape' field holds a new shape, that is added to the 'shapes' collection, 
         //  and if undone, it is removed from the collection.
-        private ClassBox shape;
+        private ClassBoxViewModel classBox;
 
         #endregion
 
         #region Constructor
 
         // For changing the current state of the diagram.
-        public AddShapeCommand(ObservableCollection<ClassBox> _shapes, ClassBox _shape) 
+        public AddClassBoxCommand(ObservableCollection<ClassBoxViewModel> classBoxes, ClassBoxViewModel classBox) 
         { 
-            shapes = _shapes;
-            shape = _shape;
+            this.classBoxes = classBoxes;
+            this.classBox = classBox;
         }
 
         #endregion
@@ -42,13 +39,13 @@ namespace _02350Demo.Command
         // For doing and redoing the command.
         public void Execute()
         {
-            shapes.Add(shape);
+            classBoxes.Add(classBox);
         }
 
         // For undoing the command.
         public void UnExecute()
         {
-            shapes.Remove(shape);
+            classBoxes.Remove(classBox);
         }
 
         #endregion
