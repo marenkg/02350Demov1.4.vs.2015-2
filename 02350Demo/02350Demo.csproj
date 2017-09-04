@@ -39,7 +39,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Icon.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="GalaSoft.MvvmLight, Version=5.1.1.35049, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
@@ -77,7 +78,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Command\AddLineCommand.cs" />
+    <Compile Include="Command\AddEdgeCommand.cs" />
     <Compile Include="Command\AddClassBoxCommand.cs" />
     <Compile Include="Command\IUndoRedoCommand.cs" />
     <Compile Include="Command\MoveShapeCommand.cs" />
@@ -86,9 +87,10 @@
     <Compile Include="Command\ResizeItemCommand.cs" />
     <Compile Include="Command\UndoRedoController.cs" />
     <Compile Include="ViewModel\ClassBoxViewModel.cs" />
+    <Compile Include="ViewModel\EdgeViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="View\LineUserControl.xaml.cs">
-      <DependentUpon>LineUserControl.xaml</DependentUpon>
+    <Compile Include="View\EdgeUserControl.xaml.cs">
+      <DependentUpon>EdgeUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MenuBar.xaml.cs">
       <DependentUpon>MenuBar.xaml</DependentUpon>
@@ -102,9 +104,9 @@
     <Compile Include="View\Toolbar.xaml.cs">
       <DependentUpon>Toolbar.xaml</DependentUpon>
     </Compile>
-    <Page Include="View\LineUserControl.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="View\EdgeUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -150,9 +152,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="View\Images\Arrow.png" />

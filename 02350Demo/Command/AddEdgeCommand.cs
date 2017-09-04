@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace _02350Demo.Command
 {
     // Undo/Redo command for adding a Line.
-    public class AddLineCommand : IUndoRedoCommand
+    public class AddEdgeCommand : IUndoRedoCommand
     {
         // Regions can be used to make code foldable (minus/plus sign to the left).
         #region Fields
@@ -19,20 +19,20 @@ namespace _02350Demo.Command
         //  therefore when this collection is changed in a object of this class, 
         //  it also changes the collection that the MainViewModel uses.
         // For a description of an ObservableCollection see the MainViewModel class.
-        private ObservableCollection<Line> lines;
+        private ObservableCollection<Edge> lines;
         // The 'line' field holds a new line, that is added to the 'lines' collection, 
         //  and if undone, it is removed from the collection.
-        private Line line;
+        private Edge _edge;
 
         #endregion
 
         #region Constructor
 
         // For changing the current state of the diagram.
-        public AddLineCommand(ObservableCollection<Line> _lines, Line _line) 
+        public AddEdgeCommand(ObservableCollection<Edge> _lines, Edge edge) 
         { 
             lines = _lines;
-            line = _line;
+            _edge = edge;
         }
 
         #endregion
@@ -42,13 +42,13 @@ namespace _02350Demo.Command
         // For doing and redoing the command.
         public void Execute()
         {
-            lines.Add(line);
+            lines.Add(_edge);
         }
 
         // For undoing the command.
         public void UnExecute()
         {
-            lines.Remove(line);
+            lines.Remove(_edge);
         }
 
         #endregion

@@ -18,9 +18,9 @@ namespace _02350Demo.View
     /// <summary>
     /// Interaction logic for EdgeUserControl.xaml
     /// </summary>
-    public partial class LineUserControl : UserControl
+    public partial class EdgeUserControl : UserControl
     {
-        public LineUserControl()
+        public EdgeUserControl()
         {
             InitializeComponent();
         }

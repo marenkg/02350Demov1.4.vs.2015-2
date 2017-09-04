@@ -28,7 +28,7 @@ namespace _02350Demo.Command
         //  therefore when this collection is changed in a object of this class, 
         //  it also changes the collection that the MainViewModel uses.
         // For a description of an ObservableCollection see the MainViewModel class.
-        private ObservableCollection<Line> lines;
+        private ObservableCollection<Edge> lines;
 
         // The 'shapesToRemove' field holds a collection of existing shapes, that are removed from the 'shapes' collection, 
         //  and if undone, they are added to the collection.
@@ -36,14 +36,14 @@ namespace _02350Demo.Command
 
         // The 'linesToRemove' field holds a collection of existing lines, that are removed from the 'lines' collection, 
         //  and if undone, they are added to the collection.
-        private List<Line> linesToRemove;
+        private List<Edge> linesToRemove;
 
         #endregion
 
         #region Constructor
 
         // For the current state of the diagram.
-        public RemoveClassBoxCommand(ObservableCollection<ClassBoxViewModel> _shapes, ObservableCollection<Line> _lines, List<ClassBoxViewModel> _shapesToRemove)
+        public RemoveClassBoxCommand(ObservableCollection<ClassBoxViewModel> _shapes, ObservableCollection<Edge> _lines, List<ClassBoxViewModel> _shapesToRemove)
         {
             shapes = _shapes;
             lines = _lines;

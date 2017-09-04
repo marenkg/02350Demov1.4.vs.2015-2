@@ -52,7 +52,7 @@ namespace _02350Demo.ViewModel
         //  and default getter setter methods should be generated.
         // This is called Auto-Implemented Properties (http://msdn.microsoft.com/en-us/library/bb384054.aspx).
         public ObservableCollection<ClassBoxViewModel> ClassBoxes { get; set; }
-        public ObservableCollection<Line> Lines { get; set; }
+        public ObservableCollection<Edge> Lines { get; set; }
 
         // Commands that the UI can be bound to.
         // These are read-only properties that can only be set in the constructor.
@@ -94,7 +94,7 @@ namespace _02350Demo.ViewModel
             // Here the list of Lines i filled with 1 Line that connects the 2 Shapes in the Shapes collection.
             // ElementAt() is an Extension Method, that like many others can be used on all types of collections.
             // It works just like the "Shapes[0]" syntax would be used for arrays.
-            Lines = new ObservableCollection<Line>() { 
+            Lines = new ObservableCollection<Edge>() { 
             };
 
             // The commands are given the methods they should use to execute, and find out if they can execute.
@@ -207,7 +207,7 @@ namespace _02350Demo.ViewModel
         // Removes the chosen Lines with a RemoveLinesCommand.
         private void RemoveLines(IList _lines)
         {
-            undoRedoController.AddAndExecute(new RemoveLinesCommand(Lines, _lines.Cast<Line>().ToList()));
+            undoRedoController.AddAndExecute(new RemoveLinesCommand(Lines, _lines.Cast<Edge>().ToList()));
         }
 
         // There are two reasons for doing a 'MouseDown' on a Shape, to move it or to draw a line from it.
@@ -282,7 +282,7 @@ namespace _02350Demo.ViewModel
                 {
                     // Now that it has been established that the Line adding operation has been completed succesfully by the user, 
                     //  a Line is added using an 'AddLineCommand', with a new Line given between the two shapes chosen.
-                    undoRedoController.AddAndExecute(new AddLineCommand(Lines, new Line() { Source = addingLineFrom, Sink = shape }));
+                    undoRedoController.AddAndExecute(new AddEdgeCommand(Lines, new Edge() { Source = addingLineFrom, Sink = shape }));
                     // The property used for visually indicating that a Line is being Drawn is cleared, 
                     //  so the View can return to its original and default apperance.
                     //addingLineFrom.IsSelected = false;

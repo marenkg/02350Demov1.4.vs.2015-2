@@ -19,11 +19,11 @@ namespace _02350Demo.Command
         //  therefore when this collection is changed in a object of this class, 
         //  it also changes the collection that the MainViewModel uses.
         // For a description of an ObservableCollection see the MainViewModel class.
-        private ObservableCollection<Line> lines;
+        private ObservableCollection<Edge> lines;
 
         // The 'linesToRemove' field holds a collection of existing lines, that are removed from the 'lines' collection, 
         //  and if undone, they are added to the collection.
-        private List<Line> linesToRemove;
+        private List<Edge> linesToRemove;
 
         #endregion
 
@@ -31,7 +31,7 @@ namespace _02350Demo.Command
 
         // For changing the current state of the diagram 
         //  (or at least the relevant parts).
-        public RemoveLinesCommand(ObservableCollection<Line> _lines, List<Line> _linesToRemove) 
+        public RemoveLinesCommand(ObservableCollection<Edge> _lines, List<Edge> _linesToRemove) 
         {
             lines = _lines;
             linesToRemove = _linesToRemove;
