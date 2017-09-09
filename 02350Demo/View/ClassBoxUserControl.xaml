@@ -5,10 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
+             xmlns:helper="clr-namespace:_02350Demo.Helper"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              Canvas.Left="{Binding X}" Canvas.Top="{Binding Y}"
-             Width="{Binding Width}" Height="{Binding Height}">
+             helper:SizeObserver.Observe="true" helper:SizeObserver.ObservedHeight="{Binding Height, Mode=OneWayToSource}"
+             helper:SizeObserver.ObservedWidth="{Binding Width, Mode=OneWayToSource}">
+    
+
     <UserControl.InputBindings>
         <KeyBinding Modifiers="Control" Key="Z" Command="{Binding UndoCommand}" />
         <KeyBinding Modifiers="Control" Key="Y" Command="{Binding RedoCommand}" />
@@ -16,7 +20,7 @@
 
 
 
-    <Grid Width="{Binding Width, Mode=OneWayToSource}" Height="{Binding Height, Mode=OneWayToSource}">
+    <Grid>
         <Rectangle Opacity="{Binding DataContext.ModeOpacity, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" StrokeThickness="6" StrokeDashArray="3.1">
             <!-- The fill (background) color of the ellipse is a radial (center to edge) gradient (more than one color) brush. -->
             <Rectangle.Fill>

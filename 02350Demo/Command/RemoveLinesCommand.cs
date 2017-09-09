@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using _02350Demo.ViewModel;
 
 namespace _02350Demo.Command
 {
@@ -19,11 +20,11 @@ namespace _02350Demo.Command
         //  therefore when this collection is changed in a object of this class, 
         //  it also changes the collection that the MainViewModel uses.
         // For a description of an ObservableCollection see the MainViewModel class.
-        private ObservableCollection<Edge> lines;
+        private ObservableCollection<EdgeViewModel> lines;
 
         // The 'linesToRemove' field holds a collection of existing lines, that are removed from the 'lines' collection, 
         //  and if undone, they are added to the collection.
-        private List<Edge> linesToRemove;
+        private List<EdgeViewModel> linesToRemove;
 
         #endregion
 
@@ -31,7 +32,7 @@ namespace _02350Demo.Command
 
         // For changing the current state of the diagram 
         //  (or at least the relevant parts).
-        public RemoveLinesCommand(ObservableCollection<Edge> _lines, List<Edge> _linesToRemove) 
+        public RemoveLinesCommand(ObservableCollection<EdgeViewModel> _lines, List<EdgeViewModel> _linesToRemove) 
         {
             lines = _lines;
             linesToRemove = _linesToRemove;

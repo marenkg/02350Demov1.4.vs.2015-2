@@ -86,6 +86,7 @@
     <Compile Include="Command\RemoveClassBoxCommand.cs" />
     <Compile Include="Command\ResizeItemCommand.cs" />
     <Compile Include="Command\UndoRedoController.cs" />
+    <Compile Include="Helper\SizeObserver.cs" />
     <Compile Include="ViewModel\ClassBoxViewModel.cs" />
     <Compile Include="ViewModel\EdgeViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

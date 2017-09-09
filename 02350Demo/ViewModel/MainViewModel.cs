@@ -32,7 +32,7 @@ namespace _02350Demo.ViewModel
         // Keeps track of the state, depending on whether a line is being added or not.
         private bool isAddingLine;
         // Used for saving the shape that a line is drawn from, while it is being drawn.
-        private ClassBox addingLineFrom;
+        private ClassBoxViewModel addingLineFrom;
         // Saves the initial point that the mouse has during a move operation.
         private Point initialMousePosition;
         // Saves the initial point that the shape has during a move operation.
@@ -52,7 +52,7 @@ namespace _02350Demo.ViewModel
         //  and default getter setter methods should be generated.
         // This is called Auto-Implemented Properties (http://msdn.microsoft.com/en-us/library/bb384054.aspx).
         public ObservableCollection<ClassBoxViewModel> ClassBoxes { get; set; }
-        public ObservableCollection<Edge> Lines { get; set; }
+        public ObservableCollection<EdgeViewModel> Lines { get; set; }
 
         // Commands that the UI can be bound to.
         // These are read-only properties that can only be set in the constructor.
@@ -75,6 +75,8 @@ namespace _02350Demo.ViewModel
         public ICommand MouseMoveShapeCommand { get; }
         public ICommand MouseUpShapeCommand { get; }
 
+        
+
         public MainViewModel()
         {
             // Here the list of Shapes is filled with 2 Nodes. 
@@ -94,7 +96,7 @@ namespace _02350Demo.ViewModel
             // Here the list of Lines i filled with 1 Line that connects the 2 Shapes in the Shapes collection.
             // ElementAt() is an Extension Method, that like many others can be used on all types of collections.
             // It works just like the "Shapes[0]" syntax would be used for arrays.
-            Lines = new ObservableCollection<Edge>() { 
+            Lines = new ObservableCollection<EdgeViewModel>() { 
             };
 
             // The commands are given the methods they should use to execute, and find out if they can execute.
@@ -117,6 +119,12 @@ namespace _02350Demo.ViewModel
             MouseMoveShapeCommand = new RelayCommand<MouseEventArgs>(MouseMoveShape);
             MouseUpShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseUpShape);
 
+
+            AddClassBox();
+            AddClassBox();
+            var egde = new EdgeViewModel(ClassBoxes[0], ClassBoxes[1]);
+            Lines.Add(egde);
+
           //  ExitCommand = new RelayCommand<Window>(ExitWindow);
 
         }
@@ -130,7 +138,7 @@ namespace _02350Demo.ViewModel
         // Adds a Shape with an AddShapeCommand.
         private void AddClassBox()
         {
-            undoRedoController.AddAndExecute(new AddClassBoxCommand(ClassBoxes, new ClassBoxViewModel()));
+             undoRedoController.AddAndExecute(new AddClassBoxCommand(ClassBoxes, new ClassBoxViewModel()));
         }
 
         private void LoadData()
@@ -207,7 +215,7 @@ namespace _02350Demo.ViewModel
         // Removes the chosen Lines with a RemoveLinesCommand.
         private void RemoveLines(IList _lines)
         {
-            undoRedoController.AddAndExecute(new RemoveLinesCommand(Lines, _lines.Cast<Edge>().ToList()));
+            undoRedoController.AddAndExecute(new RemoveLinesCommand(Lines, _lines.Cast<EdgeViewModel>().ToList()));
         }
 
         // There are two reasons for doing a 'MouseDown' on a Shape, to move it or to draw a line from it.
@@ -278,11 +286,11 @@ namespace _02350Demo.ViewModel
                 }
                 // If this is not the first Shape choosen, and therefore the second, 
                 //  it is checked that the first and second Shape are different.
-                else if (addingLineFrom.Number != shape.Number)
+               /* else if (addingLineFrom.Number != shape.Number)
                 {
                     // Now that it has been established that the Line adding operation has been completed succesfully by the user, 
                     //  a Line is added using an 'AddLineCommand', with a new Line given between the two shapes chosen.
-                    undoRedoController.AddAndExecute(new AddEdgeCommand(Lines, new Edge() { Source = addingLineFrom, Sink = shape }));
+                    undoRedoController.AddAndExecute(new AddEdgeCommand(Lines, new EdgeViewModel() { Source = addingLineFrom, Sink = shape }));
                     // The property used for visually indicating that a Line is being Drawn is cleared, 
                     //  so the View can return to its original and default apperance.
                     //addingLineFrom.IsSelected = false;
@@ -293,7 +301,7 @@ namespace _02350Demo.ViewModel
                     // The property used for visually indicating which Shape has already chosen are choosen is cleared, 
                     //  so the View can return to its original and default apperance.
                     RaisePropertyChanged(() => ModeOpacity);
-                }
+                }*/
             }
             // Used for moving a Shape.
             else
@@ -319,12 +327,12 @@ namespace _02350Demo.ViewModel
         }
 
         // Gets the shape that was clicked.
-        private ClassBox TargetShape(MouseEventArgs e)
+        private ClassBoxViewModel TargetShape(MouseEventArgs e)
         {
             // Here the visual element that the mouse is captured by is retrieved.
             var shapeVisualElement = (FrameworkElement)e.MouseDevice.Target;
             // From the shapes visual element, the Shape object which is the DataContext is retrieved.
-            return (ClassBox)shapeVisualElement.DataContext;
+            return (ClassBoxViewModel)shapeVisualElement.DataContext;
         }
 
         // Gets the mouse position relative to the canvas.

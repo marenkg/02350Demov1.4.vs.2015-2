@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using _02350Demo.ViewModel;
 
 namespace _02350Demo.Command
 {
@@ -19,17 +20,17 @@ namespace _02350Demo.Command
         //  therefore when this collection is changed in a object of this class, 
         //  it also changes the collection that the MainViewModel uses.
         // For a description of an ObservableCollection see the MainViewModel class.
-        private ObservableCollection<Edge> lines;
+        private ObservableCollection<EdgeViewModel> lines;
         // The 'line' field holds a new line, that is added to the 'lines' collection, 
         //  and if undone, it is removed from the collection.
-        private Edge _edge;
+        private EdgeViewModel _edge;
 
         #endregion
 
         #region Constructor
 
         // For changing the current state of the diagram.
-        public AddEdgeCommand(ObservableCollection<Edge> _lines, Edge edge) 
+        public AddEdgeCommand(ObservableCollection<EdgeViewModel> _lines, EdgeViewModel edge) 
         { 
             lines = _lines;
             _edge = edge;
