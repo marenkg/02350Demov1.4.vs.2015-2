@@ -19,7 +19,7 @@ namespace _02350Demo.Command
         //  as one of the objects in the MainViewModels 'Shapes' ObservableCollection.
         // This shape is moved by changing its coordinates (X and Y), 
         //  and if undone the coordinates are changed back to the original coordinates.
-        private ClassBoxViewModel shape;
+        private ClassBoxViewModel classBox;
 
         // The 'offsetX' field holds the offset (difference) between the original and final X coordinate.
         private double offsetX;
@@ -31,10 +31,10 @@ namespace _02350Demo.Command
         #region Constructor
 
         // For changing the current state of the diagram.
-        public MoveShapeCommand(ClassBoxViewModel _shape, double _offsetX, double _offsetY) 
+        public MoveShapeCommand(ClassBoxViewModel _classBox, double _offsetX, double _offsetY) 
         {
           
-            shape = _shape;
+            classBox = _classBox;
             offsetX = _offsetX;
             offsetY = _offsetY;
         }
@@ -46,22 +46,22 @@ namespace _02350Demo.Command
         // For doing and redoing the command.
         public void Execute()
         {
-            //TODO update postions first!!
+            // Updates position first to make sure edges goes to the new position
+            classBox.X += offsetX;
+            classBox.Y += offsetY;
 
-            foreach (var edge in shape.connectedEdges)
+            // Updates position for eges
+            foreach (var edge in classBox.connectedEdges)
             {
                 edge.positionChanged();
             }
-
-            // shape.CanvasCenterX += offsetX;
-            //shape.CanvasCenterY += offsetY;
         }
 
         // For undoing the command.
         public void UnExecute()
         {
-            //shape.CanvasCenterX -= offsetX;
-            //shape.CanvasCenterY -= offsetY;
+            classBox.X -= offsetX;
+            classBox.Y -= offsetY;
         }
 
         #endregion

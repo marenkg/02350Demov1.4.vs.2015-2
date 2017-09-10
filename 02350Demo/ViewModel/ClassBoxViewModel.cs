@@ -9,6 +9,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using _02350Demo.Model;
+using System.Windows.Media;
 
 namespace _02350Demo.ViewModel
 {
@@ -28,7 +29,8 @@ namespace _02350Demo.ViewModel
         public ICommand SizeChanged { get; }
 
         public ClassBox classBox { get; }
-        public bool isSelected { get; set; }
+        public bool IsSelected { get; set; }
+        public Brush SelectedColor => IsSelected ? Brushes.Blue : Brushes.LightBlue;
 
         public List<EdgeViewModel> connectedEdges = new List<EdgeViewModel>();
 

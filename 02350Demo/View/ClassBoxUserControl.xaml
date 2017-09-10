@@ -21,14 +21,8 @@
 
 
     <Grid>
-        <Rectangle Opacity="{Binding DataContext.ModeOpacity, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" StrokeThickness="6" StrokeDashArray="3.1">
+        <Rectangle Fill ="{Binding SelectedColor}"  Opacity="{Binding DataContext.ModeOpacity, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" StrokeThickness="6" StrokeDashArray="3.1">
             <!-- The fill (background) color of the ellipse is a radial (center to edge) gradient (more than one color) brush. -->
-            <Rectangle.Fill>
-                <RadialGradientBrush>
-                    <GradientStop Color="Black" Offset="0.0" />
-                </RadialGradientBrush>
-            </Rectangle.Fill>
-
 
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDown">

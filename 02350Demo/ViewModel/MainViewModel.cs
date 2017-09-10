@@ -119,12 +119,6 @@ namespace _02350Demo.ViewModel
             MouseMoveShapeCommand = new RelayCommand<MouseEventArgs>(MouseMoveShape);
             MouseUpShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseUpShape);
 
-
-            AddClassBox();
-            AddClassBox();
-            var egde = new EdgeViewModel(ClassBoxes[0], ClassBoxes[1]);
-            Lines.Add(egde);
-
           //  ExitCommand = new RelayCommand<Window>(ExitWindow);
 
         }
