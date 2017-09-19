@@ -20,20 +20,20 @@ namespace _02350Demo.Command
         //  therefore when this collection is changed in a object of this class, 
         //  it also changes the collection that the MainViewModel uses.
         // For a description of an ObservableCollection see the MainViewModel class.
-        private ObservableCollection<EdgeViewModel> lines;
+        private ObservableCollection<EdgeViewModel> edges;
         // The 'line' field holds a new line, that is added to the 'lines' collection, 
         //  and if undone, it is removed from the collection.
-        private EdgeViewModel _edge;
+        private EdgeViewModel edge;
 
         #endregion
 
         #region Constructor
 
         // For changing the current state of the diagram.
-        public AddEdgeCommand(ObservableCollection<EdgeViewModel> _lines, EdgeViewModel edge) 
+        public AddEdgeCommand(ObservableCollection<EdgeViewModel> edges, EdgeViewModel edge) 
         { 
-            lines = _lines;
-            _edge = edge;
+            this.edges = edges;
+            this.edge = edge;
         }
 
         #endregion
@@ -43,13 +43,13 @@ namespace _02350Demo.Command
         // For doing and redoing the command.
         public void Execute()
         {
-            lines.Add(_edge);
+            edges.Add(edge);
         }
 
         // For undoing the command.
         public void UnExecute()
         {
-            lines.Remove(_edge);
+            edges.Remove(edge);
         }
 
         #endregion

@@ -30,7 +30,7 @@ namespace _02350Demo.ViewModel
         private UndoRedoController undoRedoController = UndoRedoController.Instance;
 
         // Keeps track of the state, depending on whether a line is being added or not.
-        private bool isAddingLine;
+        private bool isAddingLine =  false;
         // Used for saving the shape that a line is drawn from, while it is being drawn.
         private ClassBoxViewModel addingLineFrom;
         // Saves the initial point that the mouse has during a move operation.
@@ -197,9 +197,18 @@ namespace _02350Demo.ViewModel
         // Starts the procedure to remove a Line, by changing the mode to 'isAddingLine', 
         //  and making the shapes transparent.
         private void AddLine()
-        {
-            isAddingLine = true;
-            RaisePropertyChanged(() => ModeOpacity);
+        {   
+            if (isAddingLine == false)
+            {
+                isAddingLine = true;
+            }
+            else
+            {
+                isAddingLine = false;
+            }
+
+
+            //RaisePropertyChanged(() => ModeOpacity);
         }
 
         // Checks if the chosen Lines can be removed, which they can if at least one is chosen.
@@ -222,6 +231,7 @@ namespace _02350Demo.ViewModel
             {
                 // The Shape is gotten from the mouse event.
                 var shape = TargetShape(e);
+                shape.IsSelected = true;
                 // The mouse position relative to the target of the mouse event.
                 var mousePosition = RelativeMousePosition(e);
 
@@ -237,6 +247,7 @@ namespace _02350Demo.ViewModel
                 // The mouse is captured, so the current shape will always be the target of the mouse events, 
                 //  even if the mouse is outside the application window.
                 e.MouseDevice.Target.CaptureMouse();
+    
             }
         }
 
@@ -248,7 +259,7 @@ namespace _02350Demo.ViewModel
             if (Mouse.Captured != null && !isAddingLine)
             {
                 // The Shape is gotten from the mouse event.
-                var shape = TargetShape(e);
+                var shape = TargetShape(e);       
                 // The mouse position relative to the target of the mouse event.
                 var mousePosition = RelativeMousePosition(e);
 
@@ -256,7 +267,7 @@ namespace _02350Demo.ViewModel
                 // The View (GUI) is then notified by the Shape, that its properties have changed.
                 shape.X = initialShapePosition.X + (mousePosition.X - initialMousePosition.X);
                 shape.Y = initialShapePosition.Y + (mousePosition.Y - initialMousePosition.Y);
-            }
+            } 
         }
 
         // There are two reasons for doing a 'MouseUp'.
@@ -268,36 +279,19 @@ namespace _02350Demo.ViewModel
             // Used for adding a Line.
             if (isAddingLine)
             {
-                // Because a MouseUp event has happened and a Line is currently being drawn, 
-                //  the Shape that the Line is drawn from or to has been selected, and is here retrieved from the event parameters.
-                var shape = TargetShape(e);
-                // This checks if this is the first Shape chosen during the Line adding operation, 
-                //  by looking at the addingLineFrom variable, which is empty when no Shapes have previously been choosen.
-                // If this is the first Shape choosen, and if so, the Shape is saved in the AddingLineFrom variable.
-                //  Also the Shape is set as selected, to make it look different visually.
-                if (addingLineFrom == null) { addingLineFrom = shape;
-                   // addingLineFrom.IsSelected = true;
-                }
-                // If this is not the first Shape choosen, and therefore the second, 
-                //  it is checked that the first and second Shape are different.
-               /* else if (addingLineFrom.Number != shape.Number)
+                // Get source
+                if (addingLineFrom != null)
                 {
-                    // Now that it has been established that the Line adding operation has been completed succesfully by the user, 
-                    //  a Line is added using an 'AddLineCommand', with a new Line given between the two shapes chosen.
-                    undoRedoController.AddAndExecute(new AddEdgeCommand(Lines, new EdgeViewModel() { Source = addingLineFrom, Sink = shape }));
-                    // The property used for visually indicating that a Line is being Drawn is cleared, 
-                    //  so the View can return to its original and default apperance.
-                    //addingLineFrom.IsSelected = false;
-                    // The 'isAddingLine' and 'addingLineFrom' variables are cleared, 
-                    //  so the MainViewModel is ready for another Line adding operation.
-                    isAddingLine = false;
+                    undoRedoController.AddAndExecute(new AddEdgeCommand(Lines, new EdgeViewModel(addingLineFrom, TargetShape(e))));
                     addingLineFrom = null;
-                    // The property used for visually indicating which Shape has already chosen are choosen is cleared, 
-                    //  so the View can return to its original and default apperance.
-                    RaisePropertyChanged(() => ModeOpacity);
-                }*/
+                    isAddingLine = false;
+                }
+                else
+                {
+                    addingLineFrom = TargetShape(e);
+                }
+               
             }
-            // Used for moving a Shape.
             else
             {
                 // The Shape is gotten from the mouse event.
@@ -314,10 +308,12 @@ namespace _02350Demo.ViewModel
                 // The MoveNodeCommand is given the offset that it should be moved relative to its original position, 
                 //  and with respect to the Undo/Redo functionality the Shape has only been moved once, with this Command.
                 undoRedoController.AddAndExecute(new MoveShapeCommand(shape, mousePosition.X - initialMousePosition.X, mousePosition.Y - initialMousePosition.Y));
-                
+
                 // The mouse is released, as the move operation is done, so it can be used by other controls.
                 e.MouseDevice.Target.ReleaseMouseCapture();
             }
+
+
         }
 
         // Gets the shape that was clicked.

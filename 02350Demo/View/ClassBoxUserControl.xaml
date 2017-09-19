@@ -19,6 +19,7 @@
     </UserControl.InputBindings>
 
 
+    
 
     <Grid>
         <Rectangle Fill ="{Binding SelectedColor}"  Opacity="{Binding DataContext.ModeOpacity, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" StrokeThickness="6" StrokeDashArray="3.1">

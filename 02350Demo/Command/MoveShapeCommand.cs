@@ -62,6 +62,11 @@ namespace _02350Demo.Command
         {
             classBox.X -= offsetX;
             classBox.Y -= offsetY;
+
+            foreach (var edge in classBox.connectedEdges)
+            {
+                edge.positionChanged();
+            }
         }
 
         #endregion

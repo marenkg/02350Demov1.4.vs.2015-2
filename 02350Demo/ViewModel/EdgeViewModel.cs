@@ -15,12 +15,12 @@ namespace _02350Demo.ViewModel
 
         public Point SourcePoint
         {
-            get { return findPreferedPoint(Source); }
+            get { return edge.FindPreferedPoints().Item1; }
         }
 
         public Point SinkPoint
         {
-            get { return findPreferedPoint(Sink); }
+            get { return edge.FindPreferedPoints().Item2; }
         }
 
         public void positionChanged()
@@ -29,10 +29,6 @@ namespace _02350Demo.ViewModel
             RaisePropertyChanged(() => SinkPoint);
         }
 
-        public Point findPreferedPoint(ClassBox classBox)
-        {
-            return classBox.North;
-        }
 
         public Edge edge { get; }
     

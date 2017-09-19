@@ -19,17 +19,21 @@ namespace _02350Demo.ViewModel
         public ClassBoxViewModel(ClassBox classBox)
         {
             this.classBox = classBox;
+            IsSelected = false;
         }
 
         public ClassBoxViewModel()
         {
             this.classBox = new ClassBox();
+            IsSelected = false;
         }
         
         public ICommand SizeChanged { get; }
 
         public ClassBox classBox { get; }
-        public bool IsSelected { get; set; }
+
+        private bool isSelected;
+        public bool IsSelected { get { return isSelected; } set { isSelected = value; RaisePropertyChanged(() => SelectedColor); } }
         public Brush SelectedColor => IsSelected ? Brushes.Blue : Brushes.LightBlue;
 
         public List<EdgeViewModel> connectedEdges = new List<EdgeViewModel>();
