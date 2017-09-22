@@ -9,8 +9,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              Canvas.Left="{Binding X}" Canvas.Top="{Binding Y}"
-             helper:SizeObserver.Observe="true" helper:SizeObserver.ObservedHeight="{Binding Height, Mode=OneWayToSource}"
-             helper:SizeObserver.ObservedWidth="{Binding Width, Mode=OneWayToSource}">
+             helper:SizeObserver.Observe="true" helper:SizeObserver.ObservedHeight="{Binding Height, Mode=TwoWay}"
+             helper:SizeObserver.ObservedWidth="{Binding Width, Mode=TwoWay}">
     
 
     <UserControl.InputBindings>
@@ -22,7 +22,7 @@
     
 
     <Grid>
-        <Rectangle Fill ="{Binding SelectedColor}"  Opacity="{Binding DataContext.ModeOpacity, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" StrokeThickness="6" StrokeDashArray="3.1">
+        <Rectangle Fill ="{Binding SelectedColor}" MinHeight="{Binding Height, Mode=OneTime}" MinWidth="{Binding Width, Mode=OneTime}" Opacity="{Binding DataContext.ModeOpacity, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" >
             <!-- The fill (background) color of the ellipse is a radial (center to edge) gradient (more than one color) brush. -->
 
             <i:Interaction.Triggers>
@@ -39,13 +39,13 @@
         </Rectangle>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition />
+                <RowDefinition  Height="Auto"/>
+                <RowDefinition  Height="Auto"/>
+                <RowDefinition  Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBox Text="{Binding ContentClass}"  HorizontalAlignment="Stretch" AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Stretch" Grid.Row="0" BorderThickness="1,1,1,1" BorderBrush="Gray" TextAlignment="Center" Margin="30,0,30,0"/>
-            <TextBox Text="{Binding ContentFields}" HorizontalAlignment="Stretch" AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Stretch" Grid.Row="1" BorderThickness="1,1,1,1" BorderBrush="Gray"/>
-            <TextBox Text="{Binding ContentMethods}" HorizontalAlignment="Stretch" AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Stretch" Grid.Row="2" BorderThickness="1,1,1,1" BorderBrush="Gray"/>
+            <TextBox Text="{Binding ContentClass}"  TextWrapping="Wrap" AcceptsReturn="True" Grid.Row="0" BorderThickness="1,1,1,1" BorderBrush="Gray" TextAlignment="Center" Margin="30,0,30,0"/>
+            <TextBox Text="{Binding ContentFields}" TextWrapping="Wrap" AcceptsReturn="True" Grid.Row="1" BorderThickness="1,1,1,1" BorderBrush="Gray"/>
+            <TextBox Text="{Binding ContentMethods}" TextWrapping="Wrap" AcceptsReturn="True" Grid.Row="2" BorderThickness="1,1,1,1" BorderBrush="Gray"/>
         </Grid>
 
     </Grid>

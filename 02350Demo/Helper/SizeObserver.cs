@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using _02350Demo.ViewModel;
 
 namespace _02350Demo.Helper
 {
@@ -55,6 +56,15 @@ namespace _02350Demo.Helper
             {
                 elem.SetCurrentValue(ObservedWidthProperty, elem.ActualWidth);
                 elem.SetCurrentValue(ObservedHeightProperty, elem.ActualHeight);
+                // Used to update edge position when a classbox height and width is changed. Should maybe be moved to a seperate resize command. 
+                if (elem.DataContext is ClassBoxViewModel)
+                {
+                    var classBox = elem.DataContext as ClassBoxViewModel;
+                    foreach (var edge in classBox.connectedEdges)
+                    {
+                        edge.positionChanged();
+                    }
+                }
             }
         }
 

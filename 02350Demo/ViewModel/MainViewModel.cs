@@ -30,7 +30,8 @@ namespace _02350Demo.ViewModel
         private UndoRedoController undoRedoController = UndoRedoController.Instance;
 
         // Keeps track of the state, depending on whether a line is being added or not.
-        private bool isAddingLine =  false;
+        private bool isAddingLine;
+        public  bool IsAddingLine { get { return isAddingLine; } set { isAddingLine = value; RaisePropertyChanged(() => IsAddingLineColor); } }
         // Used for saving the shape that a line is drawn from, while it is being drawn.
         private ClassBoxViewModel addingLineFrom;
         // Saves the initial point that the mouse has during a move operation.
@@ -40,6 +41,8 @@ namespace _02350Demo.ViewModel
         // Used for making the shapes transparent when a new line is being added.
         // This method uses an expression-bodied member (http://www.informit.com/articles/article.aspx?p=2414582) to simplify a method that only returns a value;
         public double ModeOpacity => isAddingLine ? 0.4 : 1.0;
+        public Brush IsAddingLineColor => isAddingLine ? Brushes.Red : Brushes.Purple;
+
 
         // The purpose of using an ObservableCollection instead of a List is that it implements the INotifyCollectionChanged interface, 
         //  which is different from the INotifyPropertyChanged interface.
@@ -79,6 +82,7 @@ namespace _02350Demo.ViewModel
 
         public MainViewModel()
         {
+
             // Here the list of Shapes is filled with 2 Nodes. 
             // The "new Type() { prop1 = value1, prop2 = value }" syntax is called an Object Initializer, which creates an object and sets its values.
             // Java:
@@ -120,7 +124,7 @@ namespace _02350Demo.ViewModel
             MouseUpShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseUpShape);
 
           //  ExitCommand = new RelayCommand<Window>(ExitWindow);
-
+            IsAddingLine = false;
         }
 
         //private void ExitWindow(window)
@@ -198,13 +202,13 @@ namespace _02350Demo.ViewModel
         //  and making the shapes transparent.
         private void AddLine()
         {   
-            if (isAddingLine == false)
+            if (IsAddingLine == false)
             {
-                isAddingLine = true;
+                IsAddingLine = true;
             }
             else
             {
-                isAddingLine = false;
+                IsAddingLine = false;
             }
 
 

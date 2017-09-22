@@ -25,7 +25,7 @@ namespace _02350Demo.Model
         private double _width = 100;
         public double Width { get { return _width; } set { _width = value; UpdateConnectionPoints(); } }
 
-        private double _height = 75;
+        private double _height = 48;
         public double Height { get { return _height; } set { _height = value; UpdateConnectionPoints(); } }
 
         public String ContentClass { get; set; }
