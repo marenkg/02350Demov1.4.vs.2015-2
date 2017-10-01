@@ -2,6 +2,7 @@
 using _02350Demo.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using Microsoft.Win32;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,11 +12,13 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Xml.Serialization;
 
 namespace _02350Demo.ViewModel
 {
@@ -41,7 +44,9 @@ namespace _02350Demo.ViewModel
         // Used for making the shapes transparent when a new line is being added.
         // This method uses an expression-bodied member (http://www.informit.com/articles/article.aspx?p=2414582) to simplify a method that only returns a value;
         public double ModeOpacity => isAddingLine ? 0.4 : 1.0;
-        public Brush IsAddingLineColor => isAddingLine ? Brushes.Red : Brushes.Purple;
+        public SolidColorBrush IsAddingLineColor => isAddingLine ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Aqua);
+
+        private Thread saveThread;
 
 
         // The purpose of using an ObservableCollection instead of a List is that it implements the INotifyCollectionChanged interface, 
@@ -54,8 +59,8 @@ namespace _02350Demo.ViewModel
         // The "{ get; set; }" syntax describes that a private field 
         //  and default getter setter methods should be generated.
         // This is called Auto-Implemented Properties (http://msdn.microsoft.com/en-us/library/bb384054.aspx).
-        public ObservableCollection<ClassBoxViewModel> ClassBoxes { get; set; }
-        public ObservableCollection<EdgeViewModel> Lines { get; set; }
+        public ObservableCollection<ClassBoxViewModel> ClassBoxesVM { get; set; }
+        public ObservableCollection<EdgeViewModel> EdgesVM { get; set; }
 
         // Commands that the UI can be bound to.
         // These are read-only properties that can only be set in the constructor.
@@ -67,7 +72,7 @@ namespace _02350Demo.ViewModel
         public ICommand RemoveShapeCommand { get; }
         public ICommand AddLineCommand { get; }
         public ICommand RemoveLinesCommand { get; }
-
+        public ICommand RemoveEdgeCommand { get; }
         public ICommand LoadCommand { get; }
         public ICommand SaveCommand { get; }
         //public ICommand ExitCommand { get; }
@@ -77,6 +82,7 @@ namespace _02350Demo.ViewModel
         public ICommand MouseDownShapeCommand { get; }
         public ICommand MouseMoveShapeCommand { get; }
         public ICommand MouseUpShapeCommand { get; }
+
 
         
 
@@ -94,13 +100,13 @@ namespace _02350Demo.ViewModel
             // Also a constructor could be created for the Shape class that takes the parameters (X, Y, Width and Height), 
             //  and the following could be done:
             // new Shape(30, 40, 80, 80);
-            ClassBoxes = new ObservableCollection<ClassBoxViewModel>() { 
+            ClassBoxesVM = new ObservableCollection<ClassBoxViewModel>() { 
 
             };
             // Here the list of Lines i filled with 1 Line that connects the 2 Shapes in the Shapes collection.
             // ElementAt() is an Extension Method, that like many others can be used on all types of collections.
             // It works just like the "Shapes[0]" syntax would be used for arrays.
-            Lines = new ObservableCollection<EdgeViewModel>() { 
+            EdgesVM = new ObservableCollection<EdgeViewModel>() { 
             };
 
             // The commands are given the methods they should use to execute, and find out if they can execute.
@@ -114,7 +120,7 @@ namespace _02350Demo.ViewModel
             RemoveShapeCommand = new RelayCommand<IList<ClassBoxViewModel>>(RemoveShape, CanRemoveShape);
             AddLineCommand = new RelayCommand(AddLine);
             RemoveLinesCommand = new RelayCommand<IList>(RemoveLines, CanRemoveLines);
-
+          //  RemoveEdgeCommand = new RelayCommand(RemoveEdgeCommand);
             LoadCommand = new RelayCommand(LoadData);
             SaveCommand = new RelayCommand(SaveData);
 
@@ -136,57 +142,11 @@ namespace _02350Demo.ViewModel
         // Adds a Shape with an AddShapeCommand.
         private void AddClassBox()
         {
-             undoRedoController.AddAndExecute(new AddClassBoxCommand(ClassBoxes, new ClassBoxViewModel()));
+             undoRedoController.AddAndExecute(new AddClassBoxCommand(ClassBoxesVM, new ClassBoxViewModel()));
         }
 
-        private void LoadData()
-        {
-            // Using old? tech
-            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
-            openFileDialog.Filter = "UML (*.uml)|*.uml";
-            if (openFileDialog.ShowDialog() == true) {
-                String filename = openFileDialog.FileName;
-                // check file exist, etc?
+      
 
-                // Delete any created objs:
-                ClassBoxes.Clear();
-                Lines.Clear();
-                // TODO: empty undoRedo stack
-
-                // https://msdn.microsoft.com/en-us/library/ms973893.aspx
-                IFormatter formatter = new BinaryFormatter();
-                Stream stream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read);
-                
-                LinkedList<Object> data = (LinkedList<Object>)formatter.Deserialize(stream);
-                data.ToList().ForEach(serializeShapeData => {
-                    ClassBox shape = new ClassBox();
-                    shape.LoadSerializedData(serializeShapeData);
-                    ClassBoxes.Add(new ClassBoxViewModel(shape));
-                });
-
-                stream.Close();
-            }
-        }
-
-        private void SaveData()
-        {
-            Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog();
-            saveFileDialog.Filter = "UML (*.uml)|*.uml";
-            if (saveFileDialog.ShowDialog() == true) {
-                String filename = saveFileDialog.FileName;
-                Stream stream = new FileStream(filename, FileMode.Create, FileAccess.Write, FileShare.None);
-
-                IFormatter formatter = new BinaryFormatter();
-                LinkedList<Object> ObservableCollection = new LinkedList<Object>();
-                foreach (var shape in ClassBoxes)
-                {
-                    ObservableCollection.AddFirst( shape.classBox.Serialize() );
-                }
-                formatter.Serialize(stream, ObservableCollection);
-
-                stream.Close();
-            }
-        }
 
         // Checks if the chosen Shapes can be removed, which they can if exactly 1 is chosen.
         // This method uses an expression-bodied member (http://www.informit.com/articles/article.aspx?p=2414582) to simplify a method that only returns a value;
@@ -195,7 +155,7 @@ namespace _02350Demo.ViewModel
         // Removes the chosen Shapes with a RemoveShapesCommand.
         private void RemoveShape(IList<ClassBoxViewModel> classBoxes)
         {
-            undoRedoController.AddAndExecute(new RemoveClassBoxCommand(ClassBoxes, Lines, classBoxes.ToList()));
+            undoRedoController.AddAndExecute(new RemoveClassBoxCommand(ClassBoxesVM, EdgesVM, classBoxes.ToList()));
         }
 
         // Starts the procedure to remove a Line, by changing the mode to 'isAddingLine', 
@@ -222,7 +182,13 @@ namespace _02350Demo.ViewModel
         // Removes the chosen Lines with a RemoveLinesCommand.
         private void RemoveLines(IList _lines)
         {
-            undoRedoController.AddAndExecute(new RemoveLinesCommand(Lines, _lines.Cast<EdgeViewModel>().ToList()));
+            undoRedoController.AddAndExecute(new RemoveLinesCommand(EdgesVM, _lines.Cast<EdgeViewModel>().ToList()));
+        }
+
+        private void RemoveEdge()
+        {
+            // get clicked line
+           // undoRedoController.AddAndExecute(new RemoveEdgeCommand(, Lines));
         }
 
         // There are two reasons for doing a 'MouseDown' on a Shape, to move it or to draw a line from it.
@@ -235,7 +201,7 @@ namespace _02350Demo.ViewModel
             {
                 // The Shape is gotten from the mouse event.
                 var shape = TargetShape(e);
-                shape.IsSelected = true;
+                
                 // The mouse position relative to the target of the mouse event.
                 var mousePosition = RelativeMousePosition(e);
 
@@ -253,6 +219,7 @@ namespace _02350Demo.ViewModel
                 e.MouseDevice.Target.CaptureMouse();
     
             }
+            
         }
 
         // This is only used for moving a Shape, and only if the mouse is already captured.
@@ -286,13 +253,15 @@ namespace _02350Demo.ViewModel
                 // Get source
                 if (addingLineFrom != null)
                 {
-                    undoRedoController.AddAndExecute(new AddEdgeCommand(Lines, new EdgeViewModel(addingLineFrom, TargetShape(e))));
+                    undoRedoController.AddAndExecute(new AddEdgeCommand(EdgesVM, new EdgeViewModel(addingLineFrom, TargetShape(e))));
                     addingLineFrom = null;
                     isAddingLine = false;
+                    DeselectAllClasses();
                 }
                 else
                 {
                     addingLineFrom = TargetShape(e);
+                    TargetShape(e).IsSelected = true;
                 }
                
             }
@@ -349,5 +318,116 @@ namespace _02350Demo.ViewModel
             dynamic parent = VisualTreeHelper.GetParent(o);
             return parent.GetType().IsAssignableFrom(typeof(T)) ? parent : FindParentOfType<T>(parent);
         }
+
+        private void DeselectAllClasses()
+        {
+            foreach (ClassBoxViewModel classBox  in ClassBoxesVM)
+            {
+                classBox.IsSelected = false;
+            }
+        }
+
+        // ---------------------- Save/Load --------------------------
+        public class SaveLoadCollection
+        {
+            public ObservableCollection<ClassBox> tempClassBoxes = new ObservableCollection<ClassBox>();
+            public ObservableCollection<EdgeViewModel> tempEdges = new ObservableCollection<EdgeViewModel>();
+            public SaveLoadCollection(ObservableCollection<ClassBoxViewModel> classBoxes, ObservableCollection<EdgeViewModel> edges)
+            {
+                foreach (ClassBoxViewModel classBoxVM in classBoxes)
+                {
+                    tempClassBoxes.Add(classBoxVM.classBox);
+                }
+                tempEdges = edges;
+            }
+            public SaveLoadCollection() { }
+
+        }
+
+        public void SerializeObjectToXML(string filepath)
+        {
+            SaveLoadCollection serializetype = new SaveLoadCollection(ClassBoxesVM, EdgesVM);
+            XmlSerializer serializer = new XmlSerializer(typeof(SaveLoadCollection));
+            using (StreamWriter wr = new StreamWriter(filepath))
+            {
+                serializer.Serialize(wr, serializetype);
+            }
+
+        }
+
+        private void DeSerializeXMLToObject(string filepath)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(SaveLoadCollection));
+            using (StreamReader streamReader = new StreamReader(filepath))
+            {
+                SaveLoadCollection Load = (SaveLoadCollection)serializer.Deserialize(streamReader);
+                // Clear current lists
+                ClassBoxesVM.Clear();
+                EdgesVM.Clear();
+                foreach (ClassBox tempClassBox in Load.tempClassBoxes)
+                {
+                    ClassBoxesVM.Add(new ClassBoxViewModel(tempClassBox));
+                }
+                foreach (EdgeViewModel edgeVM in Load.tempEdges)
+                {
+                    // Find the ClassBoxViewModels from the classBox modeles stored in edgeVM
+                    ClassBoxViewModel source = null;
+                    ClassBoxViewModel sink = null;
+                    foreach (ClassBoxViewModel classBoxVM in ClassBoxesVM)
+                    {
+                        if (edgeVM.Source.Equals(classBoxVM.classBox))
+                        {
+                            source = classBoxVM;
+                        }
+                        if (edgeVM.Sink.Equals(classBoxVM.classBox))
+                        {
+                            sink = classBoxVM;
+                        }
+                    }
+                    EdgeViewModel tempEdge = new EdgeViewModel(source, sink);
+                    undoRedoController.AddAndExecute(new AddEdgeCommand(EdgesVM, tempEdge));
+                }
+                undoRedoController.Clear();
+
+            }
+        }
+
+
+        private void LoadData()
+        {
+            OpenFileDialog dialog = new OpenFileDialog()
+            {
+                Title = "Load diagram",
+                Filter = "XML (*.xml)|*.xml"
+            };
+            if (dialog.ShowDialog() != true)
+                return;
+
+            string path = dialog.FileName;
+            DeSerializeXMLToObject(path);
+
+
+        }
+
+        private void SaveData()
+        {
+            SaveFileDialog dialog = new SaveFileDialog()
+            {
+                Title = "Save diagram",
+                FileName = "classdiagram",
+                Filter = " XML (*.xml)|*.xml| All files (*.*)|*.*"
+            };
+
+
+            if (dialog.ShowDialog() != true)
+                return;
+
+            string path = dialog.FileName;
+            saveThread = new Thread(() => SerializeObjectToXML(path));
+            saveThread.Start();
+        }
+
+
+
     }
 }

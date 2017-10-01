@@ -97,6 +97,12 @@ namespace _02350Demo.Command
             command.Execute();
         }
 
+        public void Clear()
+        {
+            undoStack.Clear();
+            redoStack.Clear();
+        }
+
         #endregion
     }
 }

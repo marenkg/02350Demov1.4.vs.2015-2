@@ -12,6 +12,15 @@ namespace _02350Demo.ViewModel
 {
     public class EdgeViewModel : ViewModelBase
     {
+        public EdgeViewModel(ClassBoxViewModel source, ClassBoxViewModel sink)
+        {
+            edge = new Edge();
+            sink.connectedEdges.Add(this);
+            source.connectedEdges.Add(this);
+            Sink = sink.classBox;
+            Source = source.classBox;
+        }
+
 
         public Point SourcePoint
         {
@@ -37,7 +46,7 @@ namespace _02350Demo.ViewModel
         public ClassBox Source
         {
             get { return edge.Source; }
-            set { edge.Source = value; }
+            set { edge.Source = value; RaisePropertyChanged(() => Source); }
         }
 
         public ClassBox Sink
@@ -46,14 +55,10 @@ namespace _02350Demo.ViewModel
             set { edge.Sink = value; RaisePropertyChanged(() => Sink); }
         }
 
+        public ClassBoxViewModel SourceVM;
 
-        public EdgeViewModel(ClassBoxViewModel souce, ClassBoxViewModel sink)
-        {
-            edge = new Edge();
-            sink.connectedEdges.Add(this);
-            souce.connectedEdges.Add(this);
-            Sink = sink.classBox;
-            Source = souce.classBox;
-        }
+        public ClassBoxViewModel SinkVM;
+
+
     }
 }

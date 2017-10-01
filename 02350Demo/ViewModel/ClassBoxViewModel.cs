@@ -13,6 +13,7 @@ using System.Windows.Media;
 
 namespace _02350Demo.ViewModel
 {
+    [System.Xml.Serialization.XmlInclude(typeof(ClassBoxViewModel))]
     public class ClassBoxViewModel : ViewModelBase
     {
 

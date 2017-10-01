@@ -22,7 +22,7 @@
     
 
     <Grid>
-        <Rectangle Fill ="{Binding SelectedColor}" MinHeight="{Binding Height, Mode=OneTime}" MinWidth="{Binding Width, Mode=OneTime}" Opacity="{Binding DataContext.ModeOpacity, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" >
+        <Rectangle Cursor="SizeAll" Fill ="{Binding SelectedColor}" MinHeight="{Binding Height, Mode=OneTime}" MinWidth="{Binding Width, Mode=OneTime}" Opacity="{Binding DataContext.ModeOpacity, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" >
             <!-- The fill (background) color of the ellipse is a radial (center to edge) gradient (more than one color) brush. -->
 
             <i:Interaction.Triggers>

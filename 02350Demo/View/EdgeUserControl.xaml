@@ -14,6 +14,14 @@
     <!-- The important thing to understand is that the DataContext of this UserControl is a 'Line' object, -->
     <!--  from the MainViewModels 'Lines' collection because this 'UserControl' is used by the ItemsCollection in the MainWindow, -->
     <!--  and that ItemsCollection is bound to the MainViewModels 'Lines' collection. -->
-    <Line Stroke="Red" X1="{Binding SourcePoint.X}" Y1="{Binding SourcePoint.Y}" X2="{Binding SinkPoint.X}" Y2="{Binding SinkPoint.Y}" StrokeThickness="10"/>
+
+    <Line Stroke="Black" X1="{Binding SourcePoint.X}" Y1="{Binding SourcePoint.Y}" X2="{Binding SinkPoint.X}" Y2="{Binding SinkPoint.Y}" StrokeThickness="7">
+        <Line.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Delete edge"/>
+            </ContextMenu>
+        </Line.ContextMenu>
+    </Line>
+
 </UserControl>
 

@@ -28,6 +28,9 @@ namespace _02350Demo.Model
         private double _height = 48;
         public double Height { get { return _height; } set { _height = value; UpdateConnectionPoints(); } }
 
+        public List<Edge> connectedEdges = new List<Edge>();
+
+
         public String ContentClass { get; set; }
         public String ContentFields { get; set; }
 
@@ -67,40 +70,6 @@ namespace _02350Demo.Model
             Number = ++counter;
             UpdateConnectionPoints();
         }
-
-        public override string ToString() => Number.ToString();
-
-        public Object Serialize()
-        {
-            // Please find a better way of doing this ...
-            Dictionary<string, double> o = new Dictionary<string, double>(4);
-            o.Add("x", X);
-            o.Add("y", Y);
-            o.Add("width", Width);
-            o.Add("height", Height);
-            return o;
-        }
-
-        public void LoadSerializedData(Object o)
-        {
-            try {
-                var obj = (Dictionary<string, double>)o;
-                double x;
-                double y;
-                double width;
-                double height;
-                obj.TryGetValue("x", out x);
-                obj.TryGetValue("y", out y);
-                obj.TryGetValue("width", out width);
-                obj.TryGetValue("height", out height);
-                X = x;
-                Y = y;
-                Width = width;
-                Height = Height;
-            } finally
-            {
-                // tja
-            }
-        }
+   
     }
 }
